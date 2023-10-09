@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+ <report id="report_doctor_detail"
+            string="Doctor Profile Details"
+            model="doctor.profile"
+            report_type="qweb-pdf"
+            name="hospital.appointment_card_report"
+            file="hospital.appointment_card_report"/>
+ <report id="appointment_card_report"
+            string="Patient Appointment Card"
+            model="report.hospital.appointment_template_id"
+            report_type="qweb-pdf"
+            name="hospital.appointment_template_id"
+            file="hospital.appointment_template_id"/>
+</odoo>

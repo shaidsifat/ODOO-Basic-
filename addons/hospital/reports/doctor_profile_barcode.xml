@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_doctor_profile_id_card">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <div class="row" style="text-align:center; margin-bottom:30px;">
+                        <span>
+                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',o.doctor_ref, 600, 100)"
+                                 style="width:300px;height:50px"/>
+                        </span>
+                    </div>
+                    <div class="row" style="border:2px solid black; min-height: 500px;align-items: center;">
+
+                         <!--  <div class="col-xs-6" style="text-align:left;padding-top:30px;width:1400px 200px;">-->
+                         <div class="col-xs-6" style="text-align:left;padding-top:30px; margin-top:10px;width:400px;padding-left:180px;">
+                                <div>
+                                    <strong>Doctor Name:</strong>
+                                    <span t-field="o.name"/>
+                                </div>
+                                <div>
+                                    <strong>Doctor Age:</strong>
+                                    <span t-field="o.age"/>
+                                </div>
+                                <div>
+                                    <strong>Gender:</strong>
+                                    <span t-field="o.gender"/>
+                                </div>
+
+                         </div>
+
+                           <!-- <div class="col-xs-6" style="text-align:right;padding-top:30px;">-->
+                        <div class="col-xs-6"   style="text-align:left;padding-top:30px;margin-left:220px; margin-top:10px;width:200px;">
+                                <div>
+                                    <strong>Date of Birth:</strong>
+                                    <span t-field="o.dob"/>
+                                </div>
+                                <div>
+                                    <strong> Institution:</strong>
+                                    <span t-field="o.institution"/>
+                                </div>
+                               <div>
+                                    <strong> Degree:</strong>
+                                    <span t-field="o.degree_ids.name"/>
+                                </div>
+                        </div>
+                        <style>
+                            .watermark {
+
+                                     padding-top: 140px;
+                                     opacity: 0.2; /* Adjust opacity as needed */
+                                     font-size: 28px; /* Font size for text watermark */
+                                     text-align: center;
+                                     color: blue; /* Text color */
+                                     margin-left: 380px;
+                                     width: 200px;
+                                    }
+                        </style>
+                         <div class="watermark">
+                            <span>Doctor Profile Details</span>
+                         </div>
+                           <!-- <div class="col-xs-6"   style="border:2px solid black;margin-right:250px;text-align:center; padding-top:10px;width:100px;">
+
+                                <div>
+                                    <strong>Doctor Name:</strong>
+                                    <span t-field="o.name"/>
+                                </div>
+                                <div>
+                                    <strong>Doctor Name:</strong>
+                                    <span t-field="o.name"/>
+                                </div>
+                            </div>
+                            <div class="col-xs-6"   style="margin-left:500px;text-align:center; padding-top:10px;width:200px;">
+                                <div>
+                                    <strong>Doctor Name:</strong>
+                                    <span t-field="o.name"/>
+                                </div>
+                                <div>
+                                    <strong>Doctor Name:</strong>
+                                    <span t-field="o.name"/>
+                                </div>
+                            </div>-->
+
+                       <!-- <div class="col-6"
+                             style="margin-left:140px; border:2px solid black;  margin-top:10px; width:200px; text-align:left;">
+                            <div>
+                                <strong>Doctor Name:</strong>
+                                <span t-field="o.name"/>
+                            </div>
+                            <div>
+                                <strong>Age:</strong>
+                                <span t-field="o.age"/>
+                            </div>
+                            <div>
+                                <strong>Gender:</strong>
+                                <span t-field="o.gender"/>
+                            </div>
+                        </div>
+                        <div class="col-6"
+                             style="border:2px solid black;text-align:right;">
+                            <div>
+                                <strong>DoB:</strong>
+                                <span t-field="o.dob"/>
+                            </div>
+                            <div>
+                                <strong>Degree:</strong>
+                                <span t-field="o.degree_ids.name"/>
+                            </div>
+                            <div>
+                                <strong>Institution:</strong>
+                                <span t-field="o.institution"/>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

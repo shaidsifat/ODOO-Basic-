@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="sale_report_invoice_document" name="page">
+            <t t-foreach="docs" t-as="doc">
+                <div>
+                    <p>This is some text that I want to print.</p>
+                    <button class="btn btn-primary" type="button" id="custom_button">Custom Button</button>
+                </div>
+                <div id="my_div">
+                    <p>This is the div that I want to print.</p>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

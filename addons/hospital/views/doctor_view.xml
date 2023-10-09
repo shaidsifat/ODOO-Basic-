@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+     <!--Doctor profile list-->
+    <record id="doctor_profile_list_view" model="ir.ui.view">
+        <field name="name">doctor.profile.list.view</field>
+        <field name="model">doctor.profile</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="institution"/>
+                <field name="degree_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Doctor profile form  -->
+    <record id="hospital_doctor_user_form_view" model="ir.ui.view">
+        <field name="name">doctor_profile.form.view</field>
+        <field name="model">doctor.profile</field>
+        <field name="arch" type="xml">
+            <form string="Doctor_profile">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" string="Name" required="1"/>
+                        </group>
+
+                        <group>
+                            <field name="age" string="Age" required="1"/>
+                        </group>
+
+                        <group>
+                            <field name="gender" string="Gender" required="1"/>
+                        </group>
+
+                        <group>
+                            <field name="dob" required="1"/>
+                        </group>
+
+                        <group>
+                            <field name="institution" required="1"/>
+                        </group>
+
+                        <group>
+                            <field name="degree_ids"  widget="many2many_tags" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="doctor_degree_list_view" model="ir.ui.view">
+        <field name="name">doctor.degree.list.view"</field>
+        <field name="model">doctor.degree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+     <record id="hospital_doctor_degree_form_view" model="ir.ui.view">
+        <field name="name">doctor.degree.form.view</field>
+        <field name="model">doctor.degree</field>
+        <field name="arch" type="xml">
+            <form string="doctor.degree">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" string="Name" required="1"/>
+                            <field name="duration"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_new_doctor_profile" model="ir.actions.act_window">
+        <field name="name">Doctor User Profile</field>
+        <field name="res_model">doctor.profile</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_new_doctor_degree" model="ir.actions.act_window">
+        <field name="name">Doctor Degree</field>
+        <field name="res_model">doctor.degree</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="doctor_menu_main" parent="hospital.hospital_patient" name="Doctor"/>
+    <menuitem id="doctor_menu" parent="hospital.doctor_menu_main" name="Doctor Profile"
+                 action="hospital.action_new_doctor_profile"/>
+    <menuitem id="doctor_degree" parent="hospital.doctor_menu_main" name="Doctor Degree"
+              action="hospital.action_new_doctor_degree"/>
+
+</odoo>

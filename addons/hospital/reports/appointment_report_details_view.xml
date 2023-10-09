@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_appointment_report_view">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="row">
+                          <style>
+                            .watermark {
+                                position: center;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                                opacity: 0.2; /* Adjust opacity as needed */
+                                font-size: 48px; /* Font size for text watermark */
+                                text-align: center;
+                                color: blue; /* Text color */
+                                transform: rotate(-45deg); /* Rotate the watermark */
+                            }
+                            table,th,td{ border: 1px solid;
+                              }
+                          </style>
+                        <div class="col-md-12">
+                            <table class="table table-condensed">
+                               <tbody>
+                                    <t t-foreach="docs" t-as="l">
+                                     <tr>
+                                            <h1>Sifat</h1>
+                                     </tr>
+                                    </t>
+                                   <div class="watermark">ODOO</div>
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+

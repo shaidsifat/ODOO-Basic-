@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="test_bill_report">
+        <t t-call="report.external_layout"/>
+        <div class="page">
+            <style>
+                .custom_table_css{
+                border-collapse:
+                collapse;align:center;
+                font-size: 19px;
+                }
+            </style>
+            <div class="row">
+                <div class="col-xs-12">
+                    <center>
+                        <b>
+                            <span>
+                                <span style="font-size:20px; font-weight:bold">Test Wise Bill Report:</span>
+                            </span>
+                        </b>
+                        <br/>
+                        <span>
+                            Billing User :
+                            <span t-esc="billing_user"/>
+                        </span>
+                    </center>
+                </div>
+                <div class="col-xs-12">
+                    <center>
+                        <p>
+                            Date from :
+                            <span t-esc="start_date"/>
+                            , Date to :
+                            <span t-esc="end_date"/>
+                        </p>
+                    </center>
+                </div>
+            </div>
+            <t t-set="total_sum" t-value="0"/>
+            <table class="custom_table_css table table-condensed">
+                <thead>
+                    <tr style="background:white">
+                        <th style="border: 1px solid black;">S/N</th>
+                        <th style="border: 1px solid black;">Patient Name</th>
+                        <th style="border: 1px solid black;">Date</th>
+                        <th style="border: 1px solid black;">Invoice Number</th>
+                        <th style="border: 1px solid black;">Bill ID</th>
+                        <th style="border: 1px solid black;">Service Name</th>
+                        <th style="border: 1px solid black;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="test_bill_collection" t-as="order">
+                        <td style="border: 1px solid black;">
+                            <span t-esc="order_index+1"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-esc="order['partner_id']"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-esc="order['date']"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-esc="order['number']"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-esc="order['origin']"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-foreach="order['product_id']" t-as="product">
+                                <i class="fa fa-caret-right"></i>
+                                <t t-esc="product['name']"/>
+                                <br/>
+                            </span>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-esc="order['total_amount']"/>
+                            <t t-set="total_sum"
+                                   t-value="total_sum + order['total_amount']"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="border: 1px solid black;">
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <b>Total Amount:</b>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-esc="total_sum"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+        </div>
+    </template>
+</odoo>

@@ -1,0 +1,1 @@
+from . import render_invoice_template_controller

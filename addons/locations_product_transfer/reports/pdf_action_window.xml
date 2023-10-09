@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <report
+            id="action_location_wise_transfer_report"
+            string="Product Transfer Report"
+            model="product.transfer.report"
+            report_type="qweb-pdf"
+            file="locations_product_transfer.product_transfer"
+            name="locations_product_transfer.product_transfer"
+    />
+</odoo>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="all_department_bill_collection">
+        <t t-call="report.external_layout"/>
+        <div class="page">
+            <style>
+                .custom_table_css {
+                border-collapse: collapse;
+                align:center;
+                font-size: 19px;
+                }
+            </style>
+            <div class="row">
+                <div class="col-xs-12">
+                    <center>
+                        <b>
+                            <span>
+                                <span style="font-size:24px; font-weight:bold">
+                                    Department Wise Daily Bill Collection Report
+                                </span>
+                            </span>
+                        </b>
+                        <br/>
+
+                    </center>
+                </div>
+                <div class="col-xs-12">
+                    <center>
+                        <p>
+                            Date from :
+                            <span t-esc="start_date"/>
+                            , Date to :
+                            <span t-esc="end_date"/>
+                        </p>
+                    </center>
+                </div>
+            </div>
+            <br/>
+
+            <t t-set="c_qty" t-value="0"></t>
+            <t t-set="s" t-value="0"></t>
+            <t t-set="r" t-value="0"></t>
+            <center>
+                <table class="custom_table_css table-condensed" style="">
+                    <thead>
+                        <tr style="border: 1px solid black;">
+                            <th style="border: 1px solid black;">S/N</th>
+                            <th style="border: 1px solid black;">Department Name</th>
+                            <th style="border: 1px solid black;text-align:center">Paid Patient</th>
+                            <th style="border: 1px solid black;text-align:center">Free Patient</th>
+                            <th style="border: 1px solid black;text-align:center">Paid Test</th>
+                            <th style="border: 1px solid black;text-align:center">Free Test</th>
+                            <th style="border: 1px solid black;">Total Amount</th>
+                            <th style="border: 1px solid black;text-align:center">Refund Amount</th>
+                            <th style="border: 1px solid black;text-align:center">Net Amount</th>
+                            <th style="border: 1px solid black;text-align:center">Refund Qty</th>
+                            <th style="border: 1px solid black;text-align:center">Net Qty</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="total_paid_count" t-value="0"/>
+                        <t t-set="total_free_count" t-value="0"/>
+                        <t t-set="sumTotalPaidAmount" t-value="0"/>
+                        <t t-set="sumTotalRefundAmount" t-value="0"/>
+                        <t t-set="refundAmount" t-value="0"/>
+                        <t t-set="net_amount" t-value="0"/>
+                        <t t-set="refund_qty" t-value="0"/>
+                        <t t-set="netQuantity" t-value="0"/>
+                        <t t-set="cpaid_patient" t-value="0"/>
+                        <t t-set="cfree_patient" t-value="0"/>
+
+
+                        <tr t-foreach="finalData" t-as="line">
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['depName']"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                                <span t-esc="line['paid_patient']"/>
+                                <t t-set="cpaid_patient" t-value="cpaid_patient + line['paid_patient']"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                                <span t-esc="line['free_patient']"/>
+                                <t t-set="cfree_patient" t-value="cfree_patient + line['free_patient']"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                                <span t-esc="line['countPaid']"/>
+                                <t t-set="total_paid_count" t-value="total_paid_count + line['countPaid']"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                                <span t-esc="line['countFree']"/>
+                                <t t-set="total_free_count" t-value="total_free_count + line['countFree']"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right;">
+                                <span t-esc="line['totalPaidAmount']"/>
+                                <t t-set="sumTotalPaidAmount"
+                                   t-value="sumTotalPaidAmount + line['totalPaidAmount']"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right;">
+                                <span t-esc="line['totalRefundAmount']"/>
+                                <t t-set="sumTotalRefundAmount"
+                                   t-value="sumTotalRefundAmount + line['totalRefundAmount']"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right;">
+                                <span t-esc="line['net_amount']"/>
+                                <t t-set="net_amount" t-value="net_amount + line['net_amount']"/>
+                            </td>
+                             <td style="border: 1px solid black; text-align:right;">
+                                <span t-esc="line['refund_qty']"/>
+                                <t t-set="refund_qty" t-value="refund_qty + line['refund_qty']"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right;">
+                                <span t-esc="line['net_qty']"/>
+                                <t t-set="netQuantity" t-value="netQuantity + line['net_qty']"/>
+                            </td>
+
+                        </tr>
+                        <!---->
+                        <tr>
+                            <td style="border: 1px solid black;">
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                                <b>Total :</b>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                                <b><span t-esc="cpaid_patient"/></b>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                                <b><span t-esc="cfree_patient"/></b>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                               <b><span t-esc="total_paid_count"/></b>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                                <b><span t-esc="total_free_count"/></b>
+                            </td>
+                            <td style="border: 1px solid black;text-align:right">
+                                <b>
+                                    <span t-esc="sumTotalPaidAmount"/>
+                                </b>
+                            </td>
+                            <td style="border: 1px solid black;text-align:right">
+                                <b>
+                                    <span t-esc="sumTotalRefundAmount"/>
+                                </b>
+                            </td>
+                            <td style="border: 1px solid black;text-align:right">
+                                <b>
+                                    <span t-esc="net_amount"/>
+                                </b>
+                            </td>
+                            <td style="border: 1px solid black;text-align:right">
+                                <b>
+                                    <span t-esc="refund_qty"/>
+                                </b>
+                            </td>
+                            <td style="border: 1px solid black;text-align:right">
+                                <b>
+                                    <span t-esc="netQuantity"/>
+                                </b>
+                            </td>
+                        </tr>
+
+                        <t t-set="netAmount" t-value="0"/>
+                        <tr>
+                            <td colspan="6" style="border: 1px solid black; text-align:right">
+                                <b>Net Amount : (Total Amount - Refund Amount)</b>
+                            </td>
+                            <td colspan="5" style="border: 1px solid black;text-align:right">
+                                <b>(
+                                    <span t-esc="sumTotalPaidAmount"/>
+                                    - <span t-esc="sumTotalRefundAmount"/>) =
+                                    <t t-set="netAmount" t-value="sumTotalPaidAmount - sumTotalRefundAmount"/>
+                                    <span t-esc="netAmount"/>
+                                </b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+        </div>
+    </template>
+</odoo>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="sale_report_invoice_document">
+            <body onload="printInvoice('{{o.id}}','invDiv')">
+                <div class="invoice" id="invDiv">
+                    <style>
+                        .banner_img{
+                        height: 115px;
+                        width: 100%;
+                        }
+                        .border_black{
+                        border-top: 1px solid black;
+                        padding-top: 10px;
+                        font-size:16px;
+                        }
+                        tr.border_bottom td {
+                        background-color :#eee;
+                        font-size:16px;
+                        }
+                        tr.border_count td {
+                        font-weight:bold;
+                        background-color :#eee;
+                        font-size:16px;
+                        }
+                        tr.border_top td {
+                        border-top: 1px solid black;
+                        }
+                        .mr{
+                        margin-top:0px
+                        }
+                        invoice_tr{
+                        border-top: 1px solid black;
+                        border-bottom: 1px solid black;
+                        }
+                        @media (max-width: 500px) {
+                        .banner_img{
+                        height: 115px;
+                        width: 100%;
+                        }
+                        .info_class{
+                        font-size: 11px;
+                        }
+                        tr.border_bottom td {
+                        font-size: 11px;
+                        }
+                        tr.border_count td {
+                        font-size: 11px;
+                        }
+                        tbody.invoice_tbody tr{
+                        font-size: 11px;
+                        }
+                        }
+                        .rotingtxt{
+                        -webkit-transform: rotate(331deg);
+                        -moz-transform: rotate(331deg);
+                        -o-transform: rotate(331deg);
+                        transform: rotate(331deg);
+                        font-size: 7rem;
+                        color: rgba(255, 5, 5, 0.17);
+                        position: absolute;
+                        text-transform:uppercase;
+                        padding-top: 20%;
+                        padding-left: 25%;
+                        opacity:0.2;
+                        }
+                         .barCode{
+<!--                        width:200px!important;-->
+<!--                        height:20px;-->
+                        }
+                        .table{
+                        border: none!important;
+                        height:10px!important;
+                        }
+                    </style>
+                    <img t-if="o.company_id.res_company_logo"
+                         t-att-src="'data:image/png;base64,%s' % o.company_id.res_company_logo"
+                         class="banner_img"/>
+                    <div class="page" >
+                        <!-- Is there a discount on at least one line? -->
+                        <!-- Barcode start-->
+<!--                        <table style="margin:0;width: 100%;" border="0" cellspacing="0" cellpadding="0" class="table">-->
+<!--                                <tr>-->
+<!--                                    <td >-->
+<!--                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',o.number, 500, 30)" class="barCode"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align: center; width:50px;" >-->
+<!--                                        <h2 style="font-size: 18px;">Billing Invoice</h2>-->
+<!--                                    </td>-->
+<!--                                    <td  >-->
+<!--                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',o.partner_id.ref, 500, 30)" class="barCode"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                        </table>-->
+
+                        <div style="width:100%;display:flex; " >
+                            <div style="width:33.33%">
+                                   <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',o.number, 300, 40)" class="barCode"/>
+                            </div>
+                            <div  style="width:33.33%; text-align: center;"><h2 style="font-size: 18px;margin-top:1px">Billing Invoice</h2></div>
+                            <div  style="width:33.33%">
+                                 <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',o.partner_id.ref, 300, 40)" class="barCode"/>
+                            </div>
+                        </div>
+                        <!-- Barcode ends-->
+                        <tr t-foreach="order_id" t-as="order">
+                            <div class="border_black">
+                                <div class="row info_class">
+                                    <div class="col-xs-6">
+                                        <b>Invoice Number:</b>
+                                        <span t-esc="o.number"/>
+                                    </div>
+                                    <div class="col-xs-6" style="padding-left: 40px;">
+                                        <b>Patient ref ID:</b>
+                                        <span t-esc="o.partner_id.ref"/>
+
+                                    </div>
+                                </div>
+                                <!---->
+                                <div class="row info_class">
+                                    <div class="col-xs-6">
+                                        <b>Patient Name:</b>
+                                        <span t-esc="o.partner_id.name"/>
+                                    </div>
+                                    <div class="col-xs-6" style="padding-left: 40px;">
+                                        <b>Date and Time:</b>
+                                        <span t-esc="current_time"/>
+                                    </div>
+                                </div>
+                                <!---->
+                                <div class="row info_class">
+                                    <div class="col-xs-6">
+                                        <b>Gender:</b>
+                                        <t t-if="o.partner_id.gender == 'M'">
+                                            <span>Male</span>
+                                        </t>
+                                        <t t-else="o.partner_id.gender == 'F'">
+                                            <span>Female</span>
+                                        </t>
+
+                                    </div>
+                                    <div class="col-xs-6" style="padding-left: 40px;">
+                                        <b>Age:</b>
+                                        <span t-esc="o.partner_id.age"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </tr>
+                        <br/>
+                        <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+                        <t t-set="total_amount" t-value="0"></t>
+
+                        <!--free watermark-->
+                        <div style="text-align:left;">
+                            <t t-if="o.discount_percentage == 100">
+                                <p class="rotingtxt">Free</p>
+                            </t>
+                        </div>
+
+                        <table style="width:100%; font-size: 16px;">
+                            <tr class="border_bottom" style="font-weight:bold;" bgcolor="#eee">
+                                <td>S/N</td>
+                                <td align="left" width="60%">Services</td>
+                                <td>Quantity</td>
+                                <td>Unit Price</td>
+                                <td style="text-align:right;">Amount</td>
+                            </tr>
+                            <t t-set="total_sum" t-value="0"/>
+                            <tbody class="invoice_tbody">
+
+                                <tr class="border_bottom"
+                                    style="border-top: 1px solid black;border-bottom: 1px solid black; "
+                                    t-foreach="o.invoice_line_ids" t-as="l">
+
+                                    <td style="padding: 8px 0;">
+                                        <span t-esc="l_index+1"/>
+
+                                    </td>
+                                    <td>
+                                        <span t-field="l.name"/>
+                                    </td>
+                                    <td align="center">
+                                        <span t-field="l.quantity"/>
+                                    </td>
+                                    <td align="center">
+                                        <span t-field="l.price_unit"/>
+                                    </td>
+                                    <td align="right">
+                                        <span t-esc="'%.2f'%(l.price_unit*l.quantity)"/>
+                                        <t t-set="total_sum"
+                                           t-value="total_sum + (l.price_unit*l.quantity)"/>
+                                    </td>
+                                </tr>
+                                <tr class="border_count" >
+                                    <td colspan="4" style="padding-top: 15px !important">Total:</td>
+                                    <td align="right" style="padding-top: 15px !important">
+                                        <t t-esc="'%.2f'%(total_sum)"/>
+                                    </td>
+                                </tr>
+                                <tr class="border_count">
+                                    <td align="right" style=""
+                                        colspan="4">Free:
+                                    </td>
+                                    <td align="right">
+                                        <t t-esc="o.discount"/>
+                                    </td>
+                                </tr>
+                                <tr class="border_count">
+                                    <td align="right" colspan="4">Paid:
+                                    </td>
+                                    <td align="right">
+                                        <t t-esc="o.amount_total - o.residual"/>
+                                        <t t-set="paid" t-value="o.amount_total - o.residual"></t>
+                                    </td>
+                                </tr>
+                                <tr class="border_count">
+                                    <td align="right"
+                                        colspan="4">Due:
+                                    </td>
+                                    <td align="right">
+                                        <t t-esc="o.residual"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <br/>
+                        <div>
+                            <p style="text-align:right;">
+                                <sapn style="border-bottom:1px solid black">
+                                    <t t-esc="o.write_uid.name"/>
+                                </sapn>
+                            </p>
+                            <p style="text-align:right;font-size: 14px;">Billing Clerk</p>
+                        </div>
+                    </div>
+                </div>
+            </body>
+        </template>
+        <template id="bahmni_sale_report_invoice">
+            <script type="text/javascript" src="/bahmni_sale/static/src/js/invoice_print.js"></script>
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="bahmni_sale.sale_report_invoice_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+        <!--footer inherit-->
+        <template id="external_layout_footer_inherit" inherit_id="report.external_layout_footer">
+
+            <xpath expr="//div[@class='footer']" position="attributes">
+                <attribute name="t-att-style">'display: none;'</attribute>
+            </xpath>
+        </template>
+        <!--external layout inherit for customization-->
+<!--        <template id="external_layout_inheriting_for_ttt" inherit_id="report.external_layout">-->
+<!--            <xpath expr="//t[@t-raw='0']" position="replace">-->
+<!--                <span></span>-->
+<!--            </xpath>-->
+<!--        </template>-->
+    </data>
+</odoo>
