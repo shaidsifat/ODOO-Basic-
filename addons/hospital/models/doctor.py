@@ -29,6 +29,7 @@ class Doctor(models.Model):
     @api.depends('dob')
     def _compute_person_age(self):
         for record in self:
+
             if record.dob:
 
                 year = relativedelta(datetime.now().date(), datetime.strptime(record.dob, '%Y-%m-%d')).years

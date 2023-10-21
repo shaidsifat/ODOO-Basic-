@@ -6,7 +6,7 @@
         <field name="model">patient.userprofile</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"/>
+                <field name="patient_id"/>
                 <field name="gender"/>
                 <field name="address"/>
             </tree>
@@ -22,16 +22,18 @@
                 <sheet>
                     <group>
 
-                        <group>
-                            <field name="name" string="Name" required="1"/>
-                            <field name="patient_ref"  required="1"/>
+                         <group>
+                            <field name="patient_id" required="1" domain="[('is_patient','=',True)]" context="{'model': 'patient.profile'}"/>
                         </group>
+
                         <group>
                             <field name="age" string="Age" required="1"/>
                         </group>
+
                         <group>
                             <field name="gender" string="Gender" required="1"/>
                         </group>
+
                         <group>
                             <field name="dob" required="1"/>
                         </group>
@@ -49,6 +51,23 @@
             </form>
         </field>
     </record>
+
+   <!-- inherit view -->
+
+
+
+<!--     <record id="inherit_customer_view" model="ir.ui.view">-->
+<!--        <field name="name">customer_view.inherit.form.view</field>-->
+<!--        <field name="model">res.partner</field>-->
+<!--        <field name="inherit_id" ref="base.view_partner_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='supplier']" position="after">-->
+<!--                <field name="patient_name" />-->
+<!--            </xpath>-->
+<!--        </field>-->
+
+<!--    </record>-->
+
 <!--submenu Patient Profile-->
     <menuitem id="patient_sub_menu" parent="hospital.hospital_patient" name="Patient Profile" sequence="1"
          action="hospital.action_user_hospital_profile"/>

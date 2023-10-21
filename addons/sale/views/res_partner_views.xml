@@ -35,6 +35,9 @@
             </field>
         </record>
 
+
+
+
         <record id="res_partner_view_buttons" model="ir.ui.view">
             <field name="name">res.partner.view.buttons</field>
             <field name="model">res.partner</field>
