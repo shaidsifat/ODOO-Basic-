@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="multiple_user_bill_collection_report">
+        <t t-call="report.external_layout"/>
+        <div class="page">
+            <style>
+                .custom_table_css{
+                border-collapse:
+                collapse;align:center;
+                font-size: 19px;
+                }
+            </style>
+            <center>
+                <h1>
+                    User Wise Daily Bill Collection Report (Multiple)
+                </h1>
+            </center>
+            <br/>
+            <div>
+                <div style="float:Left;">
+
+                    <b>Start Date:</b>
+                    <span t-esc="start_date"/>
+                </div>
+                <div style="float:right;">
+
+                    <b>End date:</b>
+                    <span t-esc="end_date"/>
+                </div>
+            </div>
+            <br/>
+            <div>
+                <div style="float:Left;">
+                    <strong>Printed Time:</strong>
+                    <span t-esc="current_time"/>
+                </div>
+                <div style="float:right;">
+                    <strong>Printed By:</strong>
+                    <span t-esc="user_name"/>
+                </div>
+            </div>
+            <br/>
+            <center>
+                <h3>Total products:</h3>
+            </center>
+            <t t-set="c_qty" t-value="0"></t>
+            <center>
+                <table class="custom_table_css table table-condensed" style="border: 1px solid black;">
+                    <thead>
+                        <tr style="border: 1px solid black;">
+                            <th style="border: 1px solid black;">Sl No.</th>
+                            <th style="border: 1px solid black;">User Name</th>
+                            <th style="border: 1px solid black;">Total Patient</th>
+                            <th style="border: 1px solid black;">Free Bill</th>
+                            <th style="border: 1px solid black;">Refund</th>
+                            <th style="border: 1px solid black;">Total Amount</th>
+                            <th style="border: 1px solid black;">Open Bill</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="multiple_bill_collection" t-as="line">
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['user_name']"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['total_patient']"/>
+
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['free_patient']"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['total_Refund']"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['total_collection']"/>
+                                <t t-set="c_qty" t-value="c_qty+line['total_collection']"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['totalOpenInvoiceAmount']"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;">
+                            </td>
+                            <td style="border: 1px solid black;">
+                            </td>
+                            <td style="border: 1px solid black;">
+                            </td>
+                            <td style="border: 1px solid black;">
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <b>Total :</b>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <b>
+                                    <span t-esc="c_qty"/>
+                                </b>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+        </div>
+    </template>
+</odoo>

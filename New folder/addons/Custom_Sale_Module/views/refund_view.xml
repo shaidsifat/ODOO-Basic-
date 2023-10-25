@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+      <record id="customer_refund_form_view" model="ir.ui.view">
+        <field name="name">sale.product.form.view</field>
+        <field name="model">refund.product</field>
+        <field name="arch" type="xml">
+            <form string="Refund Product">
+                <sheet>
+                    <group>
+
+                        <group>
+                            <field name="product_ids"  widget="many2many_tags" required="1"/>
+                        </group>
+
+                        <group>
+                            <field name="amount" string="Amount" required="1"/>
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+</odoo>

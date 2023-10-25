@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <report
+            id="action_pdf_scrap_product_report"
+            string="Date Wise Scrap Product Report"
+            model="inventory.scrap.product.report"
+            report_type="qweb-pdf"
+            file="scrap_product_report.pdf_view_scrap_product_report"
+            name="scrap_product_report.pdf_view_scrap_product_report"
+    />
+</odoo>

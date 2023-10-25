@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- form view -->
+        <record id="view_scrap_product_reports" model="ir.ui.view">
+            <field name="name">inventory.scrap.product.report.report</field>
+            <field name="model">inventory.scrap.product.report</field>
+            <field name="arch" type="xml">
+                <form string="Location Wise Product Report">
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                        </group>
+                        <group>
+                            <field name="end_date"/>
+                        </group>
+                        <group>
+                            <field name="location_id"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print Report" class="oe_highlight"
+                                type="object"/>
+                         Or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!-- action -->
+        <record id="action_scrap_product_reports" model="ir.actions.act_window">
+			<field name="name">Scrap product report</field>
+			<field name="res_model">inventory.scrap.product.report</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_scrap_product_reports" />
+			<field name="target">new</field>
+		</record>
+
+        <menuitem id="expire_wizard_report"
+                  action="action_scrap_product_reports"
+                  parent="stock.menu_warehouse_report"
+                  sequence="12"/>
+    </data>
+</odoo>

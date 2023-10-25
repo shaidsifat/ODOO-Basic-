@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_appointment_detail">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+
+            </t>
+        </t>
+    </template>
+</odoo>
+

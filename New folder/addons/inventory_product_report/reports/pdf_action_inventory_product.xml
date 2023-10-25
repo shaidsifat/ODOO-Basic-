@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <report
+            id="action_main_store_product_report"
+            string="Location Wise Product Report"
+            model="inventory.main_store_product.report"
+            report_type="qweb-pdf"
+            file="inventory_product_report.main_stores_product"
+            name="inventory_product_report.main_stores_product"
+    />
+</odoo>

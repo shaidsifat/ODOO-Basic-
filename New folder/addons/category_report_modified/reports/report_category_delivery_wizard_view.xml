@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="category_wise_delivery_modified">
+        <t t-call="report.external_layout"/>
+        epartment Wise Bill Collection Report
+        <div class="page">
+            <div class="row">
+                <div class="col-xs-12">
+                    <center>
+                        <b>
+                            <span>
+                                <span style="font-size:20px; font-weight:bold">
+                                   Department Wise Bill Collection Report
+                                </span>
+                            </span>
+                        </b>
+                        <br/>
+
+                    </center>
+                </div>
+                <div class="col-xs-12">
+                    <center>
+                        <p>
+                            Date from :
+                            <span t-esc="start_date"/>
+                            , Date to :
+                            <span t-esc="end_date"/>
+                        </p>
+                    </center>
+                </div>
+
+            </div>
+            <br/>
+            <center>
+                <h3>Department Of <span t-esc="department_name"/></h3>
+            </center>
+            <t t-set="c_qty" t-value="0"></t>
+            <t t-set="c_tunit" t-value="0"></t>
+            <t t-set="r_qty" t-value="0"></t>
+            <t t-set="r_tunit" t-value="0"></t>
+            <t t-set="netAmount" t-value="0"></t>
+
+            <center>
+                <table class="kha1 table-condensed" style="border-collapse: collapse;align:center">
+                    <thead>
+                        <tr style="border: 1px solid black;">
+                            <th style="border: 1px solid black;">S/N</th>
+                            <th style="border: 1px solid black;">Name</th>
+                            <th style="border: 1px solid black;">Quantity</th>
+                            <th style="border: 1px solid black;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="data_collection" t-as="line">
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['name']"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:center">
+                                <span t-esc="line['quantity']"/>
+                                <t t-set="c_qty" t-value="c_qty+line['quantity']"/>
+                            </td>
+                            <td style="border: 1px solid black;text-align:right">
+                                <span t-esc="line['total_unit_price']"/>
+                                <t t-set="c_tunit" t-value="c_tunit+line['total_unit_price']"/>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td colspan="2" style="border: 1px solid black; text-align:right">
+                                <b>Total :</b>
+                            </td>
+                            <td style="border: 1px solid black;text-align:center">
+                                <span t-esc="c_qty"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                                <b>
+                                    <span t-esc="c_tunit"/>
+                                </b>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4" style="border: 1px solid black;">
+                                Refund
+                            </td>
+                        </tr>
+                        <tr t-foreach="refund_cate_data" t-as="line">
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['name']"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['quantity']"/>
+                            </td>
+                            <td style="border: 1px solid black; text-align:right">
+                                <span t-esc="line['refund_total_unit_price']"/>
+                                <t t-set="r_tunit" t-value="r_tunit+line['refund_total_unit_price']"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"
+                                style="border: 1px solid black; font-weight:bold; text-align:right  ">
+                                <t t-set="netAmount" t-value="c_tunit - r_tunit"/>
+                                Net Amount :
+                                <t t-if="c_tunit > 0">
+                                    (
+                                    <span t-esc="c_tunit"/>
+                                    -<span t-esc="r_tunit"/>) =
+                                </t>
+                                <span t-esc="netAmount"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+        </div>
+    </template>
+</odoo>

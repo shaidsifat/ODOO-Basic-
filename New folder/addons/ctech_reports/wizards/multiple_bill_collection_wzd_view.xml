@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_multiple_bill_collection" model="ir.ui.view">
+            <field name="name">custom.multiple.bill.collection.report</field>
+            <field name="model">custom.multiple.bill.collection</field>
+            <field name="arch" type="xml">
+                <form string="Product sale report">
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                        </group>
+                        <group>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print Report" class="oe_highlight"
+                                type="object"/>
+                         Or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_multiple_bill_collection_report" model="ir.actions.act_window">
+			<field name="name">Multiple User Wise Daily Bill Collection Report</field>
+			<field name="res_model">custom.multiple.bill.collection</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_multiple_bill_collection" />
+			<field name="target">new</field>
+		</record>
+
+        <menuitem id="multiple_user_bill_collection_id"
+                  action="action_multiple_bill_collection_report"
+                  parent="sales_team.menu_sale_report"
+                  sequence="1"/>
+    </data>
+</odoo>

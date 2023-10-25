@@ -7,10 +7,14 @@
 		<field name="inherit_id" ref="sale.view_order_form"/>
 		<field name="arch" type="xml">
 			<xpath expr="//field[@name='client_order_ref']" position="after">
-				<field name="is_invoice_printed" groups="bahmni_sale.group_invoice_print_hide"/>
+				<field name="is_invoice_printed"/>
 			</xpath>
 			<xpath expr="//button[@name='action_done']" position="after">
 				<button name="print_invoice" type="object" class="btn-primary" string = "Print Invoice" attrs="{'invisible': ['|',('state', 'not in', ['sale']),('is_invoice_printed','in',[True])]}">
+				</button>
+			</xpath>
+			<xpath expr="//button[@name='action_done']" position="after">
+				<button name="print_refund_invoice" type="object" class="btn-primary" string = "Print RefundInvoice" attrs="{'invisible': ['|',('state', 'not in', ['sale']),('is_invoice_printed','in',[True])]}">
 				</button>
 			</xpath>
 			<xpath expr="//field[@name='partner_shipping_id']" position="after">
@@ -164,7 +168,6 @@
 				<field name="note" class="oe_inline" placeholder="Kindly write some reason for make this order Free"
 				attrs="{'required':[('sale_type', '=', 'free')], 'invisible':[('sale_type','!=','free')]}"/>
 			</xpath>
-
 		</field>
 	</record>
 	

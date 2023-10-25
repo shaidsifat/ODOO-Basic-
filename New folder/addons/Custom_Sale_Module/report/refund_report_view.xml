@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+         <template id="report_sale_order">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout">
+                    <div class="page">
+
+                          <div class="row" style="text-align:center; margin-bottom:30px;">
+
+                             <span>
+                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',o.amount, 300, 40)" class="barCode"/>
+                             </span>
+                              <h1>----------------Billing Invoice--------------------------</h1>
+                                   <span>
+                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',o.amount, 300, 40)" class="barCode"/>
+                                   </span>
+<!--                              <div>-->
+<!--                                 <strong>Patient Name:</strong>-->
+<!--                                 <span t-field="o.patient"/>-->
+<!--                              </div>-->
+<!--                              <div>-->
+<!--                                 <strong>Patient date of birth:</strong>-->
+<!--                                 <span t-field="o.patient.dob"/>-->
+<!--                              </div>-->
+<!--                               <div>-->
+<!--                                 <strong>Patient Age:</strong>-->
+<!--                                 <span t-field="o.patient.age"/>-->
+<!--                              </div>-->
+
+                          </div>
+
+                          <div class="col-xs-6" style="text-align:left;padding-top:30px; margin-top:10px;width:400px;padding-left:180px;">
+
+
+                                <div>
+                                 <strong>Patient Name:</strong>
+                                 <span t-field="o.patient"/>
+                                </div>
+                                <div>
+                                 <strong>Patient date of birth:</strong>
+                                 <span t-field="o.patient.dob"/>
+                                </div>
+                                <div>
+                                 <strong>Patient Age:</strong>
+                                 <span t-field="o.patient.age"/>
+                                </div>
+
+
+                          </div>
+
+
+
+
+
+
+                    </div>
+                </t>
+            </t>
+         </template>
+</odoo>
+
+<!--                             <div class="col-xs-6" style="text-align:left;padding-top:30px; margin-top:10px;width:400px;padding-left:180px;">-->
+
+
+<!--                                    <div>-->
+<!--                                     <strong>Patient Name:</strong>-->
+<!--                                     <span t-field="o.patient.name"/>-->
+<!--                                   </div>-->
+<!--                                 <div>-->
+<!--                                         <strong>Patient Name:</strong>-->
+<!--                                         <span t-field="o.patient.name"/>-->
+<!--                                 </div>-->
+<!--                             </div>-->
+
+

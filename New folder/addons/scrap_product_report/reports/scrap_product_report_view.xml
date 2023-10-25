@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pdf_view_scrap_product_report">
+        <t t-call="report.internal_layout"/>
+        <div class="page">
+            <center>
+                <h1><span t-esc="location"/> Product Report</h1>
+            </center>
+            <br/>
+            <div>
+                <div style="float:Left;">
+
+                   <b>Start Date</b>
+                    <span t-esc="start_date"/>
+                </div>
+                <div style="float:right;">
+
+                   <b>End date</b>
+                    <span t-esc="end_date"/>
+                </div>
+            </div>
+            <br/>
+            <center>
+                <h3>Total products:</h3>
+            </center>
+            <t t-set="total_qty" t-value="0"></t>
+            <center>
+                <table class="table table-condensed" style="border: 1px solid black;">
+                    <thead>
+                        <tr style="border: 1px solid black;">
+                            <th style="border: 1px solid black;">Sl No.</th>
+                            <th style="border: 1px solid black;">Product Name</th>
+                            <th style="border: 1px solid black;">Product Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="scrap_data" t-as="line">
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['name']"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['product_qty']"/>
+                                <t t-set="total_qty" t-value="total_qty+ line['product_qty']"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;">
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <b>Total :</b>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <b>
+                                    <span t-esc="total_qty"/>
+                                </b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+        </div>
+    </template>
+</odoo>

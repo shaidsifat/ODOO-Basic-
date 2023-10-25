@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <act_window id="action_data_collector" name="Data Collector" res_model="data.collector" view_mode="form"></act_window>
+    <menuitem id="menu_data_collector" name="Collector" action="action_data_collector"/>
+</odoo>

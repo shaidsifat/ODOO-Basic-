@@ -266,12 +266,22 @@ class SaleOrder(models.Model):
         return {
             'type': 'ir.actions.act_url',
             'url': '/print/invoice/%s?menu_id=%s&action=%s&id=%s' % \
-                   (self.id,self.env.ref('sale.menu_sale_order').id,self.env.ref('sale.action_orders').id,self.id),
+                   (self.id, self.env.ref('sale.menu_sale_order').id, self.env.ref('sale.action_orders').id, self.id),
             'target': 'current',
             'view_type': 'form',
             'view_mode': 'form'
         }
 
+    @api.multi
+    def print_refund_invoice(self):
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/print/invoice/%s?menu_id=%s&action=%s&id=%s' % \
+                   (self.id, self.env.ref('sale.account.invoice').id, self.env.ref('sale.refund_action_orders').id, self.id),
+            'target': 'current',
+            'view_type': 'form',
+            'view_mode': 'form'
+        }
 
 
 
@@ -320,6 +330,49 @@ class SaleOrder(models.Model):
                     else:
                         message = ("<b>Auto validation Failed</b> <br/> <b>Reason:</b> There are not enough stock available for Some product on <a href=# data-oe-model=stock.location data-oe-id=%d>%s</a> Location") % (self.location_id,self.location_id.name)
                         self.message_post(body=message)
+    # @api.multi
+    # def get_age_gender(self):
+    #     """
+    #     :this function will be called when sale order is confirmed
+    #     and it assigne age and gender filed of partner_id
+    #     """
+    #     if not self.env['ir.config_parameter'].get_param('base64.authorization'):
+    #         raise ValidationError("Kindly put the 'base64.authorization' value as a base64 formated clinical \
+    #         password in system parameters")
+    #     else:
+    #         if self.partner_id.uuid:
+    #             authorization = str(self.env['ir.config_parameter'].get_param('base64.authorization'))
+    #             host_unicode_ip = self.env['ir.config_parameter'].search([('key','=','web.base.url')]).value
+    #             extract_ip_with_port = host_unicode_ip[7:]
+    #             extract_ip_without_port = extract_ip_with_port[:-5]
+    #             base_url = 'https://' + extract_ip_without_port + '/openmrs/ws/rest/v1/patientprofile/' + self.partner_id.uuid
+    #             header = {'content-type': 'application/json', 'accept': 'application/json', 'catch-control': 'no-cache',
+    #                       'authorization': authorization}
+    #             if self.partner_id.uuid and (not self.partner_id.age or self.partner_id.age == 'None' or not self.partner_id.gender):
+    #                 try:
+    #                     patient_info = requests.get(base_url, headers=header, verify=False).content
+    #                     #patient_info.raise_for_status()
+    #                     partner_info_dict = json.loads(str(patient_info))
+    #                     dob_string = str(partner_info_dict['patient']['person']['birthdate'])
+    #                     index_of_time = dob_string.find('T')
+    #                     dob_string = dob_string[:index_of_time]
+    #                     self.partner_id.write({
+    #                         'date_of_birth': datetime.strptime(dob_string, '%Y-%m-%d').date(),
+    #                         'gender': partner_info_dict['patient']['person']['gender']
+    #                     })
+    #                 except requests.exceptions.HTTPError as errh:
+    #                     _logger.error(str(errh))
+    #                     raise UserError("Http Error")
+    #                 except requests.exceptions.ConnectionError as errc:
+    #                     _logger.error(str(errc))
+    #                     raise UserError("Connection Error")
+    #                 except requests.exceptions.Timeout as errt:
+    #                     _logger.error(str(errt))
+    #                     raise UserError("Timeout Error")
+    #                 except requests.exceptions.RequestException as err:
+    #                     _logger.error(str(err))
+    #                     raise UserError("Exception Request")
+    #     return True
 
     @api.multi
     def action_create_lab_order(self):

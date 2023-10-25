@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<odoo>
+        <report
+            id="report_sale_product_summary"
+            string="Product Sale order Summary"
+            model="sale.product"
+            report_type="qweb-pdf"
+            name="Custom_Sale_Module.report_sale_order"
+            file="Custom_Sale_Module.report_sale_order"
+            />
+
+</odoo>

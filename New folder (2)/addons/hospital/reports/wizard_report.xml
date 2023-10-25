@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--<report id="appointment_card_report"
+            string="Patient Appointment Card"
+            model="report.hospital.appointment_template_id"
+            report_type="qweb-pdf"
+            name="hospital.appointment_template_id"
+            file="hospital.appointment_template_id"/>-->
+    <template id="appointment_template_id">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="row">
+                          <style>
+                            .watermark {
+                                position: middle;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                                opacity: 0.2; /* Adjust opacity as needed */
+                                font-size: 48px; /* Font size for text watermark */
+                                text-align: center;
+                                color: blue; /* Text color */
+                                transform: rotate(-45deg); /* Rotate the watermark */
+                            }
+                            table,th,td{ border: 1px solid;
+                              }
+                              col-md-12
+                          </style>
+                        <div class="col-md-12">
+                            <table class="table table-condensed">
+                               <tbody>
+                                        <tr>
+                                           <td>
+                                              <strong>Appointment Date</strong>
+
+                                          </td>
+
+                                         <td>
+                                            <strong>Patient Name</strong>
+
+                                         </td>
+
+                                         <td>
+                                             <strong>Patient Age</strong>
+
+                                         </td>
+
+                                         <td>
+                                              <strong>Patient Gender</strong>
+
+                                         </td>
+
+                                         <td>
+                                                <strong>Patient Phone</strong>
+                                         </td>
+                                          <td>
+                                               <strong>Appointed Doctor Name</strong>
+                                          </td>
+                                        </tr>
+                                    <tr t-foreach="final_data" t-as="line">
+                                        <td style="border: 1px solid black; text-transform:Capitalize;">
+                                            <span t-esc="line['date']"/>
+                                        </td>
+                                        <td style="border: 1px solid black; text-transform:Capitalize;">
+                                            <span t-esc="line['patient_id']"/>
+                                        </td>
+                                        <td style="border: 1px solid black; text-transform:Capitalize;">
+                                          <span t-esc="line['age']"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                          <span t-esc="line['gender']"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                          <span t-esc="line['patient_phone']"/>
+                                        </td>
+
+                                        <td style="border: 1px solid black; text-transform:Capitalize;">
+                                           <span t-esc="line['appointment_dr_id']['name']"/>
+                                       </td>
+                                   </tr>
+                                   <div class="watermark">Appointment Details</div>
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+ </odoo>
+
+
+
+
+

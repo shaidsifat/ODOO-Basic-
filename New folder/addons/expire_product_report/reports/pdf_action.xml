@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+            id="action_report_expire_products"
+            string="Date Wise Expire Product Report"
+            model="expire.product.report"
+            report_type="qweb-pdf"
+            file="expire_product_report.date_wise_expire_report"
+            name="expire_product_report.date_wise_expire_report"
+    />
+</odoo>

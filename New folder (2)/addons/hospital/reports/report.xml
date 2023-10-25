@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+   <report id="report_patient_card"
+            string="Patient Appointment"
+            model="appointment.profile"
+            report_type="qweb-pdf"
+            name="hospital.report_appointment_detail"
+            file="hospital.report_appointment_detail"/>
+   <!--<report id="report_patient_detail"
+            string="Patient Report"
+            model="patient.userprofile"
+            report_type="qweb-pdf"
+            name="hospital.patient_barcode_style"
+            file="hospital.patient_barcode_style"/>-->
+    <data>
+    </data>
+    <report id="report_action_appointment"
+            string="Appointment Report"
+            model="report.appointment.wizard"
+            report_type="qweb-pdf"
+            name="hospital.report_appointment_report_view"
+            file="hospital.report_appointment_report_view"/>
+
+</odoo>

@@ -1,0 +1,13 @@
+<!--
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+   &lt;!&ndash; <record id="action_user_hospital_patient" model="ir.actions.act_window">
+        <field name="name">Hospital Appointment</field>
+        <field name="res_model">appointment.hospital</field>
+        <field name="view_mode">tree,form</field>
+    </record>&ndash;&gt;
+
+    <menuitem id="sub_hospital_appointment" parent="custom_hospital_module.menu_id" name="Custom Appointment"/>
+
+</odoo>-->

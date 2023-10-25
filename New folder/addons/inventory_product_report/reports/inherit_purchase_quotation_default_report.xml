@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="inherit_purchase_quotation_report_view" inherit_id="purchase.report_purchasequotation_document">
+        <!--shipping address hide-->
+        <xpath expr="//div[@class='col-xs-6']" position="attributes">
+            <attribute name="t-att-style">'display: none;'</attribute>
+        </xpath>
+                <!--Adding supplier number, by, from, to, date field-->
+        <xpath expr="//div[@class='col-xs-6']" position="before">
+            <div style=" text-align:left; margin-left: 20px;">
+                <div style="float:Left; width:60%;">
+                    <strong>Purchase Quotation Number: </strong><span t-field="o.name"/>
+                </div>
+                <div style="float:right;  width:40%;">
+                    <strong>Supplier Name: </strong><span t-field="o.partner_id"/>
+                </div>
+            </div>
+            <br/>
+            <div style="text-align:left;margin-left: 20px;">
+                <div style="float:Left; width:60%;">
+                    <strong>Purchase Quotation Date: </strong><span t-field="o.date_order"/>
+                </div>
+                <div style="float:right;  width:40%;">
+                    <strong>Printed Date: </strong>
+                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                </div>
+            </div>
+            <br/>
+            <div style="text-align:left; margin-left: 20px;">
+                <div style="float:Left; width:60%;">
+                    <strong>Delivered To: </strong><span t-field="o.picking_type_id.default_location_dest_id"/>
+                </div>
+                <div style="float:right;  width:40%;">
+                </div>
+            </div>
+            <br/>
+        </xpath>
+        <!--hiding partner_id address hiding-->
+        <xpath expr="//div[@t-field='o.partner_id']" position="attributes">
+            <attribute name="t-att-style">'display: none;'</attribute>
+        </xpath>
+        <!--Hiding h1 tags title-->
+        <xpath expr="//div[@class='page']/h2[1]" position="attributes">
+            <attribute name="t-att-style">'display: none;'</attribute>
+        </xpath>
+
+
+
+
+    </template>
+</odoo>

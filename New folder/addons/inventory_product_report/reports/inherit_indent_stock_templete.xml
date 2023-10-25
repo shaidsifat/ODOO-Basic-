@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="inherit_inventory_indent_slip_view" inherit_id="stock.report_delivery_document">
+
+        <!-- Indent number hiding-->
+        <xpath expr="//span[@t-field='o.name']" position="attributes">
+            <attribute name="t-att-style">'font-size: 30px;'</attribute>
+            <attribute name="t-att-style">'display: none;'</attribute>
+        </xpath>
+
+
+        <!--Adding Indent number, by, from, to, date field-->
+        <xpath expr="//div[@name='customer_address']" position="before">
+            <div style=" tet-align:left;">
+                <div style="float:Left; width:60%;">
+                    <strong>Indent Number: </strong><span t-field="o.name"/>
+                </div>
+                <div style="float:right;  width:40%;">
+                    <strong>Indent By: </strong><span t-field="o.write_uid"/>
+                </div>
+            </div>
+            <br/>
+            <div style=" tet-align:left;">
+                <div style="float:Left; width:60%;">
+                    <strong>Indent From: </strong><span t-field="o.location_id"/>
+                </div>
+                <div style="float:right;  width:40%;">
+                    <strong>Indent To: </strong><span t-field="o.location_dest_id"/>
+                </div>
+            </div>
+            <br/>
+            <div style=" tet-align:left;">
+                <div style="float:Left; width:60%;">
+                    <strong>Indent Date: </strong>
+                    <t t-if="o.state == 'done'"><span t-field="o.date_done"/></t>
+                    <t t-if="o.state != 'done'"><span t-field="o.min_date"/></t>
+                </div>
+                <div style="float:right; width:40%;">
+                    <strong>Printed Time: </strong>
+                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/><br/>
+                </div>
+            </div>
+            <br/>
+        </xpath>
+
+
+        <!--Indent reports customer address hiding-->
+        <xpath expr="//div[@name='customer_address']" position="attributes">
+            <attribute name="t-att-style">'display: none;'</attribute>
+        </xpath>
+
+        <!--Indent reports table hiding-->
+        <xpath expr="//table[@class='table table-condensed']" position="attributes">
+            <attribute name="t-att-style">'display: none;'</attribute>
+        </xpath>
+
+
+        <!--Indent Table Heading Inherit and customization-->
+        <xpath expr="//th[@class='text-center']" position="before">
+            <th>Requested Qty</th>
+            <th>Last Indent Qty</th>
+            <th>Last Indent Date</th>
+        </xpath>
+
+        <!--Inherit Quantity heading to change-->
+        <xpath expr="//th[@class='text-center']" position="replace">
+            <th>Delivered Qty</th>
+        </xpath>
+
+
+        <!--Indent Table value Inherit and customization-->
+        <xpath expr="//td[@class='text-center']" position="before">
+
+            <t t-foreach="request.env['stock.pack.operation'].search([('location_dest_id', '=', o.location_dest_id.id),('location_id', '=', o.location_id.id), ('state', '=', 'done')],limit =1 ,order ='id desc')" t-as="lines">
+                <td>
+                    <t t-esc="lines.ordered_qty"/>
+                </td>
+                <td>
+                    <t t-esc="lines.qty_done"/>
+                </td>
+                <td>
+                    <t t-esc="lines.create_date"/>
+                </td>
+            </t>
+
+        </xpath>
+    </template>
+</odoo>

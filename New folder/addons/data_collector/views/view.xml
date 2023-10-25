@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="data_collector_form" model="ir.ui.view">
+            <field name="name">data.collector.form</field>
+            <field name="model">data.collector</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="arch" type="xml">
+                <form string="Data Collector">
+                   <group>
+                       <field name="department_name"/>
+                   </group>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

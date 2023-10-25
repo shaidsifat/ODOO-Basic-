@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_category_wizard_report" model="ir.ui.view">
+            <field name="name">wizard.product.category.modified.report</field>
+            <field name="model">wizard.product.category.modified</field>
+            <field name="arch" type="xml">
+                <form string="Category Wise Product Delivery Report">
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                        </group>
+                        <group>
+                            <field name="end_date"/>
+                        </group>
+                        <group>
+                            <field name="ctg_id"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print Report" class="oe_highlight"
+                                type="object"/>
+<!--                        <button name="print_excel_report" string="Print Excel" class="oe_highlight"-->
+<!--                                type="object"/>-->
+                         Or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_category_delivery_report" model="ir.actions.act_window">
+			<field name="name">Department Wise Product Report</field>
+			<field name="res_model">wizard.product.category.modified</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_category_wizard_report" />
+			<field name="target">new</field>
+		</record>
+
+        <menuitem id="menu_wizard_report"
+                  action="action_wizard_category_delivery_report"
+                  parent="sales_team.menu_sale_report"
+                  sequence="4"/>
+    </data>
+</odoo>

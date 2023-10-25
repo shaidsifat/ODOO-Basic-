@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_location_wise_product_transfer" model="ir.ui.view">
+            <field name="name">product.transfer.report.report</field>
+            <field name="model">product.transfer.report</field>
+            <field name="arch" type="xml">
+                <form string="Location Wise Product Report">
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                        </group>
+                        <group>
+                            <field name="end_date"/>
+                        </group>
+                        <group>
+                            <field name="locate_id"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print Report" class="oe_highlight"
+                                type="object"/>
+                         Or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_location_wise_product_transfer" model="ir.actions.act_window">
+			<field name="name">Product Transfer Report</field>
+			<field name="res_model">product.transfer.report</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_location_wise_product_transfer" />
+			<field name="target">new</field>
+		</record>
+
+        <menuitem id="product_transfer_menu_id"
+                  action="action_location_wise_product_transfer"
+                  parent="sales_team.menu_sale_report"
+                  sequence="12"/>
+    </data>
+</odoo>

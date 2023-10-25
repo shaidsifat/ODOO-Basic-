@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+            id="action_report_category_product_delivery"
+            string="Category Wise Product Delivery Report"
+            model="wizard.product.category.modified"
+            report_type="qweb-pdf"
+            file="category_report_modified.category_wise_delivery_modified"
+            name="category_report_modified.category_wise_delivery_modified"
+    />
+</odoo>

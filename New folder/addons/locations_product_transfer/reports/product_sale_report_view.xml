@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="product_transfer">
+        <t t-call="report.external_layout"/>
+        <div class="page">
+            <center>
+                <h1>
+                    Store Wise Product Delivered Report
+                </h1>
+            </center>
+            <br/>
+            <div>
+                <div style="float:Left;">
+
+                    <b>Start Date:</b>
+                    <span t-esc="start_date"/>
+                </div>
+                <div style="float:right;">
+
+                    <b>End date:</b>
+                    <span t-esc="end_date"/>
+                </div>
+            </div>
+            <br/>
+            <div>
+                <div style="float:Left;">
+                    <strong>Store Name:</strong>
+                    <span t-esc="location"/>
+                </div>
+                <div style="float:right;">
+                    <strong>Printed Time:</strong>
+                    <span t-esc="current_time"/>
+                </div>
+            </div>
+            <br/>
+            <div>
+                <div style="float:left;">
+                    <strong>Printed By:</strong>
+                    <span t-esc="user_name"/>
+                    <br/>
+                </div>
+            </div>
+            <br/>
+            <center>
+                <h3>Delivered products:</h3>
+            </center>
+            <t t-set="c_qty" t-value="0"></t>
+            <center>
+                <table class="table table-condensed" style="border: 1px solid black;">
+                    <thead>
+                        <tr style="border: 1px solid black;">
+                            <th style="border: 1px solid black;">Sl No.</th>
+                            <th style="border: 1px solid black;">Product Name</th>
+                            <th style="border: 1px solid black;">Issued Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="inv_data_collection" t-as="line">
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['name']"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['total_qty']"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+        </div>
+    </template>
+</odoo>

@@ -1,0 +1,80 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+
+<!--<odoo>-->
+
+<!--    <record id="custom_hospital_user_list_view" model="ir.ui.view">-->
+<!--        <field name="name">hospital.patient.list.view</field>-->
+<!--        <field name="model">hospital.patient</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <tree>-->
+<!--                <field name="name"/>-->
+<!--                <field name="gender"/>-->
+<!--                <field name="address"/>-->
+<!--            </tree>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash;    ### patientuser.profile form view ..................&ndash;&gt;-->
+<!--    <record id="custom_hospital_user_form_view" model="ir.ui.view">-->
+<!--        <field name="name">hospital.patient.form.view</field>-->
+<!--        <field name="model">hospital.patient</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="PatientUserProfile">-->
+<!--                <sheet>-->
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="name" string="Name" required="1"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="age" string="Age" required="1"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="gender" string="Gender" required="1"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--&lt;!&ndash;                            <field name="Dob" required="1"/>&ndash;&gt;-->
+<!--                        </group>-->
+
+<!--                        <group>-->
+<!--                            <field name="address" string="Address" required="1"/>-->
+<!--                        </group>-->
+
+<!--                        <group>-->
+<!--                            <field name="phone" string="Phone" required="1"/>-->
+<!--                        </group>-->
+
+<!--                    </group>-->
+<!--                </sheet>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--   <record id="action_user_hospital_patient" model="ir.actions.act_window">-->
+<!--        <field name="name">Hospital Patient</field>-->
+<!--        <field name="res_model">hospital.patient</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--   </record>-->
+
+
+<!--    <menuitem id="menu_id"   name="Custom Hospital"  action="action_user_hospital_patient" />-->
+
+<!--  &lt;!&ndash;  <menuitem id="hospital_profile_menu" name="Hospital" action="hospital.action_user_hospital_profile"/>&ndash;&gt;-->
+
+<!--    <menuitem id="sub_hospital_patient_1" parent="custom_hospital_module.menu_id" name="Custom Hospital Patient"/>-->
+
+<!--    &lt;!&ndash;<menuitem id="sub_hospital_patient_2" parent="custom_hospital_module.menu_id"  name="Custom Appointment" action="custom_hospital_module.hospital_action_user_appointment"/>&ndash;&gt;-->
+
+
+
+
+
+<!--   &lt;!&ndash; <menuitem id="doctor_menu" parent="hospital.hospital_profile_menu" name="Doctor profile"-->
+<!--                 action="hospital.action_doctor_profile"/>-->
+
+<!--    <menuitem id="doctor_degree" parent="hospital.hospital_profile_menu" name="Doctor Degree"-->
+<!--              action="hospital.action_doctor_degree"/>&ndash;&gt;-->
+
+<!--</odoo>-->
+
+
+

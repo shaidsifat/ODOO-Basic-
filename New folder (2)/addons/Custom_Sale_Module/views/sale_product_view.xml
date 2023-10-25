@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+<!--   sale_prodouct_action-->
+
+   <record id="action_sale_product" model="ir.actions.act_window">
+        <field name="name">Sale Product</field>
+        <field name="res_model">sale.product</field>
+        <field name="view_mode">tree,form</field>
+   </record>
+
+
+<!--    <menuitem id="Customer_menu" name="Hospital" action="hospital.action_user_hospital_profile"/>-->
+<!--&lt;!&ndash;Submenu Hospital Patient&ndash;&gt;-->
+<!--    <menuitem id="refund" parent="Customer_menu" name="Refund"/>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</odoo>

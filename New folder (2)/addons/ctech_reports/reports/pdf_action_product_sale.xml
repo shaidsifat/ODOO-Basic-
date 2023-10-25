@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Single user wise bill collection report action -->
+        <report
+            id="action_single_user_wise_bill_report"
+            string="User Wise Daily Bill Collection Report"
+            model="custom.single.bill.collection"
+            report_type="qweb-pdf"
+            file="ctech_reports.single_user_bill_collection_report"
+            name="ctech_reports.single_user_bill_collection_report"
+    />
+
+    <!-- Multiple user wise bill collection report action -->
+        <report
+            id="action_multiple_user_wise_bill_report"
+            string="Multiple User Wise Daily Bill Collection Report"
+            model="custom.multiple.bill.collection"
+            report_type="qweb-pdf"
+            file="ctech_reports.multiple_user_bill_collection_report"
+            name="ctech_reports.multiple_user_bill_collection_report"
+    />
+
+    <!-- Test wise collection report-->
+    <report
+            id="action_test_wise_bill_report"
+            string="User Wise Test Collection Report"
+            model="custom.test.collection"
+            report_type="qweb-pdf"
+            file="ctech_reports.test_bill_report"
+            name="ctech_reports.test_bill_report"
+    />
+
+    <!-- Single Department collection report-->
+    <report
+            id="action_single_department_bill"
+            string="Single Department Ways Daily Bill Collection Report"
+            model="custom.single.department.collection"
+            report_type="qweb-pdf"
+            file="ctech_reports.single_department_bill"
+            name="ctech_reports.single_department_bill"
+    />
+
+    <!-- All Department collection report-->
+    <report
+            id="action_all_department_action"
+            string="All Department Wise Daily Bill Collection Report"
+            model="custom.all.department.collection"
+            report_type="qweb-pdf"
+            file="ctech_reports.all_department_bill_collection"
+            name="ctech_reports.all_department_bill_collection"
+    />
+</odoo>
