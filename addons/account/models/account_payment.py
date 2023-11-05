@@ -360,7 +360,9 @@ class account_payment(models.Model):
             if rec.payment_type == 'transfer':
                 sequence_code = 'account.payment.transfer'
             else:
+
                 if rec.partner_type == 'customer':
+
                     if rec.payment_type == 'inbound':
                         sequence_code = 'account.payment.customer.invoice'
                     if rec.payment_type == 'outbound':
@@ -371,13 +373,13 @@ class account_payment(models.Model):
                     if rec.payment_type == 'outbound':
                         sequence_code = 'account.payment.supplier.invoice'
             rec.name = self.env['ir.sequence'].with_context(ir_sequence_date=rec.payment_date).next_by_code(sequence_code)
+
             if not rec.name and rec.payment_type != 'transfer':
                 raise UserError(_("You have to define a sequence for %s in your company.") % (sequence_code,))
 
             # Create the journal entry
             amount = rec.amount * (rec.payment_type in ('outbound', 'transfer') and 1 or -1)
             move = rec._create_payment_entry(amount)
-
             # In case of a transfer, the first journal entry created debited the source liquidity account and credited
             # the transfer account. Now we debit the transfer account and credit the destination liquidity account.
             if rec.payment_type == 'transfer':

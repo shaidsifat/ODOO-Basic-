@@ -1,7 +1,8 @@
 import json
 
 from odoo import api, models, fields, _
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api
+
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
 from odoo.exceptions import ValidationError
@@ -160,3 +161,4 @@ class PatientUserProfile(models.Model):
             raise exceptions.Warning("please give proper all  data")
         result = super(PatientUserProfile, self).create(vals)
         return result
+

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <template id="sale_report_invoice_document">
+        <template id="sale_refund_report_invoice_document">
             <body onload="printInvoice('{{o.id}}','invDiv')">
                 <div class="invoice" id="invDiv">
 
@@ -95,7 +95,7 @@
                         </div>
                         <!-- Barcode ends-->
                         <tr t-foreach="order_id" t-as="order">
-                            <p> o._fields</p>
+
                             <div class="border_black">
                                 <div class="row info_class">
                                     <div class="col-xs-6">
@@ -105,6 +105,7 @@
                                     <div class="col-xs-6" style="padding-left: 40px;">
                                         <b>Patient ref ID:</b>
                                         <span t-esc="o.partner_id.ref"/>
+
                                     </div>
                                 </div>
                                 <!---->
@@ -139,7 +140,7 @@
 
                         </tr>
                         <br/>
-                        <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+                        <t t-set="display_discount" t-value="any([l.discount for l in o.after_refund_invoice_lines_ids])"/>
                         <t t-set="total_amount" t-value="0"></t>
 
                         <!--free watermark-->
@@ -163,7 +164,7 @@
 
                                 <tr class="border_bottom"
                                     style="border-top: 1px solid black;border-bottom: 1px solid black; "
-                                    t-foreach="o.invoice_line_ids" t-as="l">
+                                    t-foreach="after_refund_order_line_data" t-as="l">
 
                                     <td style="padding: 8px 0;">
                                         <span t-esc="l_index+1"/>
@@ -172,6 +173,7 @@
                                     <td>
                                         <span t-field="l.name"/>
                                     </td>
+
                                     <td align="center">
                                         <span t-field="l.quantity"/>
                                     </td>
@@ -182,15 +184,41 @@
                                         <span t-esc="'%.2f'%(l.price_unit*l.quantity)"/>
                                         <t t-set="total_sum"
                                            t-value="total_sum + (l.price_unit*l.quantity)"/>
+
                                     </td>
                                 </tr>
-                                <tr class="border_count" >
-                                    <td colspan="3" style="padding-top: 15px !important"></td>
-                                    <td style="padding-top: 15px !important">Total:</td>
-                                    <td align="right" style="padding-top: 15px !important">
-                                        <t t-esc="'%.2f'%(total_sum)"/>
-                                    </td>
-                                </tr>
+<!-- ..........previous total .............-->
+<!--                                <tr class="border_count" >-->
+<!--                                    <td colspan="3" style="padding-top: 15px !important"></td>-->
+<!--                                    <td style="padding-top: 15px !important">Total:</td>-->
+<!--                                    <td align="right" style="padding-top: 15px !important">-->
+<!--                                        <t t-esc="'%.2f'%(total_sum)"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+                                    <tr class="border_count">
+                                        <td align="right" colspan="4">Total:
+                                        </td>
+                                        <td align="right">
+                                            <t t-esc="o.amount_total - o.residual"/>
+                                            <t t-set="paid" t-value="o.amount_total - o.residual"></t>
+                                        </td>
+                                    </tr>
+                                    <tr class="border_count">
+                                        <td align="right" colspan="4">Refund:
+                                        </td>
+                                        <td align="right">
+                                            <t t-esc="(total_sum - o.amount_total)"/>
+                                        </td>
+                                    </tr>
+                                   <tr class="border_count" >
+                                        <td colspan="3" style="padding-top: 15px !important"></td>
+                                        <td style="padding-top: 15px !important">Payable:</td>
+                                        <td align="right">
+                                            <t t-esc="'%.2f'%(total_sum)"/>
+                                        </td>
+                                   </tr>
+
+
                                 <tr class="border_count">
                                     <td align="right" style=""
                                         colspan="4">Free:
@@ -199,14 +227,15 @@
                                         <t t-esc="o.discount"/>
                                     </td>
                                 </tr>
-                                <tr class="border_count">
-                                    <td align="right" colspan="4">Paid:
-                                    </td>
-                                    <td align="right">
-                                        <t t-esc="o.amount_total - o.residual"/>
-                                        <t t-set="paid" t-value="o.amount_total - o.residual"></t>
-                                    </td>
-                                </tr>
+<!--                                ......previous paid...........-->
+<!--                                <tr class="border_count">-->
+<!--                                    <td align="right" colspan="4">Paid:-->
+<!--                                    </td>-->
+<!--                                    <td align="right">-->
+<!--                                        <t t-esc="o.amount_total - o.residual"/>-->
+<!--                                        <t t-set="paid" t-value="o.amount_total - o.residual"></t>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
                                 <tr class="border_count">
                                     <td align="right"
                                         colspan="4">Due:
@@ -242,15 +271,6 @@
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="bahmni_sale.sale_report_invoice_document" t-lang="o.partner_id.lang"/>
-                </t>
-            </t>
-        </template>
-
-         <template id="bahmni_sale_refund_report_invoice">
-            <script type="text/javascript" src="/bahmni_sale/static/src/js/invoice_print.js"></script>
-            <t t-call="report.html_container">
-                <t t-foreach="docs" t-as="o">
-                    <t t-call="bahmni_sale.sale_refund_report_invoice_document" t-lang="o.partner_id.lang"/>
                 </t>
             </t>
         </template>

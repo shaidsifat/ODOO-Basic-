@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="create_previous_invoice_form" model="ir.ui.view">
+        <field name="name">create.previous.invoice.form</field>
+        <field name="model">previous.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Previous Invoice">
+                <sheet>
+                    <group name="group_top">
+                        <group name="group_left">
+                            <field name="partner_id"/>
+                        </group>
+                        <group name="group_right">
+                            <field name="inv_date"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Cancel" special="cancel"></button>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="create_previous_invoice_wizard" model="ir.actions.act_window">
+        <field name="name">Previous Invoice</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">previous.invoice</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="create_previous_invoice_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>
+

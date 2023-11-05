@@ -263,7 +263,8 @@ class SaleOrder(models.Model):
 
     @api.multi
     def print_invoice(self):
-
+        print "self.invoice"
+        print self
         return {
             'type': 'ir.actions.act_url',
             'url': '/print/invoice/%s?menu_id=%s&action=%s&id=%s' % \

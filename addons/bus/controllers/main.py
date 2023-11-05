@@ -38,3 +38,5 @@ class BusController(Controller):
         if request.registry.in_test_mode():
             raise exceptions.UserError("bus.Bus not available in test mode")
         return self._poll(request.db, channels, last, options)
+
+
