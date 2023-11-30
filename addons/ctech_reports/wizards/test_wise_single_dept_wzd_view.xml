@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="view_all_department_bill_collection" model="ir.ui.view">
-            <field name="name">custom.all.department.collection.report</field>
-            <field name="model">custom.all.department.collection</field>
+        <record id="view_test_single_dept" model="ir.ui.view">
+            <field name="name">custom.test.single.dept.report</field>
+            <field name="model">custom.test.single.dept</field>
             <field name="arch" type="xml">
                 <form string="Product sale report">
                     <group>
@@ -12,6 +12,12 @@
                         </group>
                         <group>
                             <field name="end_date"/>
+                        </group>
+                        <group>
+                            <field name="user_ids" widget="many2many_tags"/>
+                        </group>
+                         <group>
+                            <field name="categ_id"/>
                         </group>
                     </group>
                     <footer>
@@ -24,18 +30,18 @@
             </field>
         </record>
 
-        <record id="action_all_department_bill_collection" model="ir.actions.act_window">
-			<field name="name">All Department Wise Daily Bill Collection Report</field>
-			<field name="res_model">custom.all.department.collection</field>
+        <record id="action_test_single_department_report" model="ir.actions.act_window">
+			<field name="name">Test Wise Single Department Report</field>
+			<field name="res_model">custom.test.single.dept</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form</field>
-			<field name="view_id" ref="view_all_department_bill_collection" />
+			<field name="view_id" ref="view_test_single_dept" />
 			<field name="target">new</field>
 		</record>
 
-        <menuitem id="all_department_bill_collection_id"
-                  action="action_all_department_bill_collection"
+        <menuitem id="test_single_dept_id"
+                  action="action_test_single_department_report"
                   parent="sales_team.menu_sale_report"
-                  sequence="2"/>
+                  sequence="1"/>
     </data>
 </odoo>

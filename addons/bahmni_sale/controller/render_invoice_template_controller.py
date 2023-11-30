@@ -7,17 +7,6 @@ class InvoiceController(Controller):
 
     @http.route('/print/invoice/<model("sale.order"):order_id>', type='http', auth="public", website='True')
     def render_sale_invoice_template(self,order_id,**kwargs):
-        # print "order_id",order_id,order_id.invoice_ids,order_id.id
-
-        list = order_id.order_line
-        # for order_id.product_id in list:
-        #     list.remove(order_id.product_id)
-        # sale_order_lines = [order_id.product_id for order_id.product_id in sale_order_lines if order_id.product_id != 10]
-        # print sale_order_lines
-        # for order_id.product_id  in order_id.order_line:
-        #      print type(order_id.order_line)
-        #      order_id.order_line.remove(order_id.product_id)
-
         order_id.write({
             'is_invoice_printed' : True
         })
@@ -33,9 +22,7 @@ class InvoiceController(Controller):
         dl_convert = delivery_date_convert.strftime(DATETIME_FORMAT_FOR_DELIVERY)
 
         return request.render("bahmni_sale.bahmni_sale_report_invoice",\
-
                {'docs': order_id.invoice_ids.filtered(lambda inv : inv.type == 'out_invoice')[0],
-               #  {'docs': order_id.invoice_ids.filtered(lambda inv: inv.type == 'out_invoice'),
                 'order_id': order_id,
                 'current_time': cd_convert,
                 'delivery_date': dl_convert,

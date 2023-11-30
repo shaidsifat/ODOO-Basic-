@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="all_department_bill_collection">
+    <template id="all_department_user_bill_collection">
         <t t-call="report.external_layout"/>
         <div class="page">
             <div class="row">
@@ -9,7 +9,7 @@
                         <b>
                             <span>
                                 <span style="font-size:24px; font-weight:bold">
-                                    Department Wise Daily Bill Collection Report
+                                    Department Wise User  Daily Bill Collection Report
                                 </span>
                             </span>
                         </b>
@@ -19,12 +19,27 @@
                 </div>
                 <div class="col-xs-12">
                     <center>
-                        <p>
-                            Date from :
-                            <span t-esc="start_date"/>
-                            , Date to :
-                            <span t-esc="end_date"/>
-                        </p>
+                        <div>
+                            <p>
+                                Date from :
+                                <span t-esc="start_date"/>
+                                , Date to :
+                                <span t-esc="end_date"/>
+                            </p>
+
+                            <div style="float:right;">
+                                <strong>Printed Time:</strong>
+                                <span t-esc="current_time"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <div>
+                                <div style="float:left;">
+                                    <strong>Printed By:</strong>
+                                    <span t-esc="user_name"/>
+                                    <br/>
+                                </div>
+                        </div>
                     </center>
                 </div>
             </div>

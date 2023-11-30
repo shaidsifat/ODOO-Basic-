@@ -6,3 +6,6 @@ access_district_tehsil,access_district_tehsil,model_district_tehsil,,1,1,1,1
 access_lab_order,access_lab_order,model_lab_order,,1,1,1,1
 access_lab_order_line,access_lab_order_line,model_lab_order_line,,1,1,1,1
 access_res_partner_attributes,access_res_partner_attributes,model_res_partner_attributes,base.group_user,1,1,1,1
+access_sale_order_duplicate_warning_wizard,access_sale_order_duplicate_warning_wizard,model_sale_order_duplicate_warning_wizard,base.group_user,1,1,1,1
+
+

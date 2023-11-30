@@ -3,51 +3,45 @@
     <template id="single_department_bill">
         <t t-call="report.external_layout"/>
         <div class="page">
-            <style>
-                .custom_table_css{
-                border-collapse:
-                collapse;align:center;
-                font-size: 19px;
-                }
-            </style>
-            <div class="row">
-                <div class="col-xs-12">
-                    <center>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <center>
 
-                        <span style="font-size:20px; font-weight:bold; ">
-                            Department Ways Bill Collection Report
-                        </span>
-                        <br/>
+                                <span style="font-size:20px; font-weight:bold; ">
+                                    Department Ways Bill Collection Report
+                                </span>
+                                <br/>
 
-                        <span style="font-size:14px; ">
-                            Date from :
-                            <span t-esc="start_date"/>
-                            , Date to :
-                            <span t-esc="end_date"/>
-                            <br/>
-                            <strong>Bill User:</strong>
-                            <strong t-foreach="billing_user" t-as="line">
-                                <span t-esc="line.name"/>,
-                            </strong>
-                        </span>
-                        <br/>
+                                <span style="font-size:14px; ">
+                                    Date from :
+                                    <span t-esc="start_date"/>
+                                    , Date to :
+                                    <span t-esc="end_date"/>
+                                    <br/>
+                                    <strong>Bill User:</strong>
+                                    <strong t-foreach="billing_user" t-as="line">
+                                        <span t-esc="line.name"/>,
+                                    </strong>
+                                </span>
+                                <br/>
 
-                        <span style="font-size:18px; font-weight:bold; margin-bottom:20px;">
-                            <span t-esc="categ_name"/>
-                        </span>
-                    </center>
-                </div>
+                                <span style="font-size:20px; font-weight:bold; margin-bottom:20px">
+                                    <span t-esc="categ_name"/>
+                                </span>
+                            </center>
+                        </div>
 
-            </div>
+                    </div>
 
-            <br/>
+                    <br/>
             <t t-set="s" t-value="0"></t>
             <t t-set="r" t-value="0"></t>
             <t t-set="refundSum" t-value="0"></t>
 
             <div class="row">
                 <center>
-                    <table class="custom_table_css table-condensed">
+                    <table class="kha1 table-condensed"
+                           style="border-collapse: collapse;align:center; width:100%">
                         <thead>
                             <tr style="border: 1px solid black;">
                                 <th style="border: 1px solid black;">S/N</th>

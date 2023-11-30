@@ -20,5 +20,16 @@
 		<field name="name">Refund Access</field>
 		<field name="category_id" ref="base.module_category_hidden"/>
 	</record>
-	
+
+<!--	<record model="group_sale_order" id="sale_order_report">-->
+<!--		<field name="name">Sale Order Admin</field>-->
+<!--		<field name="-->
+
+<!--	</record>-->
+
+<!--        &lt;!&ndash; Your security configuration goes here &ndash;&gt;-->
+<!--	<record id="group_admin" model="res.groups">-->
+<!--            <field name="name">Admin Group</field>-->
+<!--            &lt;!&ndash; Other group attributes go here &ndash;&gt;-->
+<!--	</record>-->
 </odoo>

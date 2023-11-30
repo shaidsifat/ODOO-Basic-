@@ -5,7 +5,7 @@ import json
 from odoo import fields, models, api, _
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DSDF
 from odoo.tools import float_is_zero
-from odoo.exceptions import UserError,ValidationError
+from odoo.exceptions import UserError, ValidationError, RedirectWarning
 from odoo.osv.orm import setup_modifiers
 from odoo.tools import pickle
 import logging
@@ -212,6 +212,13 @@ class SaleOrder(models.Model):
     #So Once we Confirm the sale order it will create the invoice and ask for the register payment.
     @api.multi
     def action_confirm(self):
+
+        self._check_product_availability(self.order_line, self.shop_id)
+        # self._prevent_dupicate_customer_sale()
+        # print("self._prevent_dupicate_customer_sale()")
+        # print(self._prevent_dupicate_customer_sale())
+        # self._warnign_message()
+        self._check_duplicate_products()
         res = super(SaleOrder,self).action_confirm()
         self.validate_delivery()
         #here we need to set condition for if the its enabled then can continuw owise return True in else condition
@@ -254,6 +261,39 @@ class SaleOrder(models.Model):
         else:
             return res
 
+    def _check_product_availability(self, line_ids, shop_id):
+
+
+
+        product_stock_list = []
+        validation_message = ""
+
+        for line in line_ids:
+            if line.product_id.type == 'product':
+                stock_quant = self.env['stock.quant']. search([('location_id', '=', shop_id.location_id.id),\
+                                                               ('product_id', '=', line.product_id.id)])
+
+                stock_quantity = sum(stock_quant.mapped("qty"))
+                if line.product_uom_qty > stock_quantity and stock_quant:
+                    vals = {
+                        'name': line.product_id.name,
+                        'ordered_qty': line.product_uom_qty,
+                        'available_qty': stock_quantity
+                    }
+                    product_stock_list.append(vals)
+                if not stock_quant:
+                    vals = {
+                        'name': line.product_id.name,
+                        'ordered_qty': line.product_uom_qty,
+                        'available_qty': 0
+                    }
+                    product_stock_list.append(vals)
+
+        for rec in product_stock_list:
+            validation_message += " %s has not enough stock. You plan to Sale %s Qty but available %s Qty in stock.\n"\
+                                  % (rec["name"], rec["ordered_qty"], rec["available_qty"])
+        if product_stock_list:
+            raise ValidationError(validation_message)
 
     #This method will be called when validation is happens from the Bahmni side
     @api.multi
@@ -264,54 +304,15 @@ class SaleOrder(models.Model):
     @api.multi
     def print_invoice(self):
 
+
         return {
             'type': 'ir.actions.act_url',
             'url': '/print/invoice/%s?menu_id=%s&action=%s&id=%s' % \
-                   (self.id, self.env.ref('sale.menu_sale_order').id, self.env.ref('sale.action_orders').id, self.id),
+                   (self.id,self.env.ref('sale.menu_sale_order').id,self.env.ref('sale.action_orders').id,self.id),
             'target': 'current',
             'view_type': 'form',
             'view_mode': 'form'
         }
-
-    # @api.multi
-    # def print_refund_invoice(self):
-    #     # Print the invoice by calling the report action
-    #     self.ensure_one()
-    #     return  self.env['report'].get_action(self, 'account.report_invoice')
-
-    @api.multi
-    def print_refund_invoice(self):
-
-        return {
-            'type': 'ir.actions.act_url',
-            'url': '/print/refund_invoice/%s?menu_id=%s&action=%s&id=%s' % \
-                   (self.id, self.env.ref('sale.menu_sale_order').id, self.env.ref('sale.action_orders').id, self.id),
-            'target': 'current',
-            'view_type': 'form',
-            'view_mode': 'form'
-        }
-    # @api.multi
-    # def print_refund_invoice(self):
-    #     return {
-    #         'type': 'ir.actions.act_url',
-    #         'url': '/print/invoice/%s?menu_id=%s&action=%s&id=%s' % \
-    #                (self.id, self.env.ref('account.account.invoice').id, self.env.ref('sale.refund_action_orders').id,self.id),
-    #         'target': 'current',
-    #         'view_type': 'form',
-    #         'view_mode': 'form'
-    #     }
-       # print self.id,self.order_line,self.name
-       # data = self.env['account.invoice'].search([('origin','=',self.name)]).invoice_line_ids
-       # print data
-       # for product in self.order_line:
-       #     print product.name
-       #
-       # for self.order_lines in  self.order_line:
-       #
-       #     if
-       #
-       # print data.origin,data.invoice_line_ids.product_id.name
-
 
 
 
@@ -608,3 +609,98 @@ class SaleOrder(models.Model):
                     message = "<b>Auto validation Failed</b> <br/> <b>Reason:</b> The Total amount is 0 So, Can't Register Payment."
                     inv.message_post(body=message)
 
+    # For checking double entry of same product while sale
+    @api.constrains('order_line.product_id')
+    def _check_duplicate_products(self):
+        for order in self:
+            product_ids = order.order_line.mapped('product_id')
+            if len(product_ids) != len(order.order_line):
+
+                validation_message = "Duplicate product entry is not allowed in order lines. Please remove double " \
+                                     "entry of - %s.\n" % order.product_id.name
+                raise ValidationError(validation_message)
+
+    # For preventing duplicate product selling to same customer in a day
+    def prevent_dupicate_customer_sale(self):
+    
+        today_start = datetime.combine(datetime.today(), datetime.min.time()).strftime("%Y-%m-%d %H:%M:%S")
+        today_end = datetime.combine(datetime.today(), datetime.max.time()).strftime("%Y-%m-%d %H:%M:%S")
+        
+        sale_order = self.env['sale.order'].sudo().search([
+            ('partner_id.ref', '=', self.partner_id.ref),
+            ('create_date', '>=', today_start),
+            ('product_id.type', '=', 'service'),
+            ('create_date', '<=', today_end),
+        ])
+
+        if len(sale_order) > 1:
+            view = self.env.ref("bahmni_sale.sale_order_duplicate_warning_wizard_view_form")
+            reg_pay_form = self.env.ref('account.view_account_payment_invoice_form')
+            return {
+                    'name': _('Register Payment'),
+                    'type': 'ir.actions.act_window',
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    "res_model": "object",
+                    'views': [(view.id, 'form')],
+                    'view_id': view.id,
+                    'res_model': 'sale.order.duplicate.warning.wizard',
+                    'target': 'new',
+                    'context': {
+                        "sale_order_id": self.id
+                    },
+                }
+            # msg = _("Sorry, you can't sale same patient twice in a day.")
+            # raise RedirectWarning(msg,self.,_('Go to the configuration panel'))
+        else:
+            self.action_confirm()
+
+    
+    
+    # def _warnign_message(self):
+
+
+    #     action = self.env.ref('app_name.my_model_name_form_view')
+    #     msg = _('Cannot find a chart of accounts for this company. You should configure it.\nPlease go to Account Configuration.')
+    #     raise RedirectWarning(msg,335,_('Go to the configuration panel'))
+    
+    
+    
+    @api.multi
+    def your_method(self):
+        # Display a warning or confirmation dialog
+        warning_message = "Do you want to proceed with the next action?"
+        if self.env.context.get('ok_to_proceed'):
+            # Perform the action when 'OK' is pressed
+            # Your action code here
+            self.another_action()
+        else:
+            # If 'Cancel' is pressed, do something else or do nothing
+            pass
+
+    def another_action(self):
+        # Perform the action you want after the confirmation
+        # This could be calling another method or performing the desired action.
+        # Your action code here
+        pass
+
+    @api.multi
+    def trigger_warning_and_action(self):
+        # Trigger the warning
+        # This will call your_method and display the confirmation dialog
+        self.with_context(ok_to_proceed=True).your_method()
+
+    # @api.model
+    # def search(self, args, offset=0, limit=None, order=None, count=False):
+    #
+    #     print("Current User ID:", self.env.user.id)
+    #     is_admin = self.env.user.has_group('bahmni_sale.group_admin')
+    #
+    #     print("is_admin:", is_admin)
+    #
+    #     if not is_admin:
+    #         # If the user is not an admin, add the domain filter
+    #         args = [('create_uid', '=', self.env.user.id)] + args
+    #
+    #     print("Domain Filter:", args)
+    #     return super(SaleOrder, self).search(args, offset, limit, order, count)

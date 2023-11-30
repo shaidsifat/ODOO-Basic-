@@ -29,7 +29,6 @@
             file="ctech_reports.test_bill_report"
             name="ctech_reports.test_bill_report"
     />
-
     <!-- Single Department collection report-->
     <report
             id="action_single_department_bill"
@@ -48,5 +47,24 @@
             report_type="qweb-pdf"
             file="ctech_reports.all_department_bill_collection"
             name="ctech_reports.all_department_bill_collection"
+    />
+
+    <!--- Test wise single dept-->
+    <report
+            id="action_test_single_department_report"
+            string="Test Wise Single Department Report"
+            model="custom.test.single.dept"
+            report_type="qweb-pdf"
+            file="ctech_reports.test_single_dept_report"
+            name="ctech_reports.test_single_dept_report"
+    />
+    <!-- All Department  User collection report......... -->
+    <report
+            id="action_all_department_user_action"
+            string="All Department Wise User Daily Bill Collection Report"
+            model="custom.all.department.user.collection"
+            report_type="qweb-pdf"
+            file="ctech_reports.all_department_user_bill_collection"
+            name="ctech_reports.all_department_user_bill_collection"
     />
 </odoo>

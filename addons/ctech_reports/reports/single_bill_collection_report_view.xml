@@ -3,13 +3,6 @@
     <template id="single_user_bill_collection_report">
         <t t-call="report.external_layout"/>
         <div class="page">
-            <style>
-                .custom_table_css{
-                border-collapse:
-                collapse;align:center;
-                font-size: 19px;
-                }
-            </style>
             <center>
                 <h1>
                     User Wise Daily Bill Collection Report (Single)
@@ -53,7 +46,7 @@
             </center>
             <t t-set="c_qty" t-value="0"></t>
             <center>
-                <table class="custom_table_css table table-condensed" style="border: 1px solid black;">
+                <table class="table table-condensed" style="border: 1px solid black;">
                     <thead>
                         <tr style="border: 1px solid black;">
                             <th style="border: 1px solid black;">Total Patient</th>

@@ -16,6 +16,14 @@
 				<field name="available_qty" attrs="{'invisible': [('picking_type', '=', 'incoming')]}"/> 
 				<field name="picking_type" invisible="1"/>
 			</xpath>
+			<!-- "Reserve" button hide in picking form view-->
+			<xpath expr="//button[@name='action_assign']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+			</xpath>
+			<!-- "Force Availability" button name change in picking form view-->
+			<xpath expr="//button[@name='force_assign']" position="attributes">
+				<attribute name="string">Availability</attribute>
+			</xpath>
 		</field>
 	</record>
 	

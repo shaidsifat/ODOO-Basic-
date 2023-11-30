@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<odoo>
+<!-- _All Incomplete Purchase Order Report_ wizard-->
+   <record id="view_incomplete_purchase_order_report_form" model="ir.ui.view">
+         <field name="name">report.stock_picking.wizard</field>
+         <field name="model">report.stock_picking.wizard</field>
+         <field name="arch" type="xml">
+             <form string="All incomplete product report.....">
+                 <group>
+
+                     <group>
+                         <field name="start_date"/>
+                         <field name="end_date"/>
+                     </group>
+                 </group>
+                 <footer>
+                     <button name="action_print_report" type="object" string="Print" class="btn-primary" />
+                     <button string="Cancel" class="btn-secondary" special="cancel"/>
+                 </footer>
+             </form>
+         </field>
+   </record>
+
+<!--action_report_appointments-->
+    <record id="action_report_purchase" model="ir.actions.act_window">
+        <field name="name">All Incomplete Purchase Order Product Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">report.stock_picking.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_incomplete_purchase_order_report_form"/>
+        <field name="target">new</field>
+    </record>
+<!--All Incomplete Purchase Order Report-->
+  <menuitem id="menu_incomplete_purchase_order_report" name="All Incomplete Purchase Order Report" parent="purchase.purchase_report"  action="action_report_purchase"  sequence="1"/>
+</odoo>

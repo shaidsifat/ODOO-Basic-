@@ -28,6 +28,8 @@ class Patient(models.Model):
              else:
                  vals['name_seq'] = self.env['ir.sequence'].next_by_code('sale.order') or _('New')
          result = super(Patient,self).create(vals)
+         user =self.env['sale.order'].search[('create_uid','=',36)]
+         print "user",user
          return result
 
 

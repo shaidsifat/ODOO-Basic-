@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+ <report id="incomplete_purchase_order_card_report"
+            string="Incomplete Purchase Order Product Report List"
+            model="report.purchase_incomplete_report.purchase_template_id"
+            report_type="qweb-pdf"
+            name="purchase_incomplete_report.purchase_template_id"
+            file="purchase_incomplete_report.purchase_template_id"/>
+</odoo>

@@ -3,7 +3,7 @@ from collections import namedtuple
 
 from odoo import fields, models, api
 from odoo.tools.float_utils import float_compare
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError,ValidationError
 
 
 class StockPicking(models.Model):
@@ -161,3 +161,66 @@ class StockPicking(models.Model):
             if any(sale_order) and sale_order.location_id:
                 picking_obj.location_id = sale_order.location_id.id
         return picking_obj
+
+    @api.multi
+    def action_confirm(self):
+        self._check_product_availability(self.move_lines, self.location_id)
+        self._check_same_product_stock_operations(self.move_lines,self.location_id)
+        res = super(StockPicking, self).action_confirm()
+        return res
+
+    def _check_same_product_stock_operations(self, move_lines, location_id):
+
+        product_list = []
+        # validation_massage = ""
+        # print "move_lines",move_lines
+        # for line in move_lines:
+        #     product_list.append(line.name)
+        # new_product_list = set(product_list)
+        # if product_list == new_product_list:
+        for line in move_lines:
+
+            product_list.append(line.name)
+        product_data = set(product_list)
+        print "product_data",product_data
+        print "product_list",product_list
+        if len(product_data) == len(product_list):
+                 pass
+        else:
+                validation_massage = "You cannot buy same product twice in a Stock Operations."
+                raise ValidationError(validation_massage)
+
+    def _check_product_availability(self, move_lines, location_id):
+
+        product_stock_list = []
+        validation_massage = ""
+
+        for line in move_lines:
+            stock_quant = self.env['stock.quant'].search([('location_id', '=', location_id.id), \
+                                                          ('product_id', '=', line.product_id.id)])
+
+            stock_quantity = sum(stock_quant.mapped("qty"))
+            if line.product_uom_qty > stock_quantity and stock_quant:
+                vals = {
+                    'name': line.product_id.name,
+                    'demand_qty': line.product_uom_qty,
+                    'available_qty': stock_quantity
+                }
+                product_stock_list.append(vals)
+
+            if not stock_quant:
+                vals = {
+                    'name': line.product_id.name,
+                    'demand_qty': line.product_uom_qty,
+                    'available_qty': 0
+                }
+                product_stock_list.append(vals)
+
+        for product in product_stock_list:
+            validation_massage += "Your demand quantity of %s is %s But available qty is %s.\n" \
+                                  % (product["name"], product["demand_qty"], product["available_qty"])
+        if product_stock_list:
+            raise ValidationError(validation_massage)
+
+
+

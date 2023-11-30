@@ -13,10 +13,12 @@
 				<button name="print_invoice" type="object" class="btn-primary" string = "Print Invoice" attrs="{'invisible': ['|',('state', 'not in', ['sale']),('is_invoice_printed','in',[True])]}">
 				</button>
 			</xpath>
-			<xpath expr="//button[@name='action_done']" position="after">
-				<button name="print_refund_invoice" type="object" class="btn-primary" string = "Print RefundInvoice" attrs="{'invisible': ['|',('state', 'not in', ['sale']),('is_invoice_printed','in',[True])]}">
-				</button>
-			</xpath>
+
+			<!-- Inherited Button -->
+<!--			<xpath expr="//button[@name='action_confirm']" position="replace">-->
+<!--				<button name="prevent_dupicate_customer_sale" states="draft" string="Confirm Sale" class="btn-primary o_sale_confirm" type="object" />-->
+<!--			</xpath>-->
+
 			<xpath expr="//field[@name='partner_shipping_id']" position="after">
 				<field name="partner_village" invisible="1"/>
 				<field name="care_setting" invisible="1"/>
@@ -25,8 +27,13 @@
 			<xpath expr="//field[@name='partner_id']" position="after">
 				<field name="partner_uuid" invisible="1"/>
 			</xpath>
+
+			<!--No create and edit option off for customer and shops-->
+			<xpath expr="//field[@name='partner_id']" position="attributes">
+				<attribute name="options">{'no_create': true}</attribute>
+			</xpath>
 			<xpath expr="//field[@name='payment_term_id']" position="after">
-				<field name="shop_id"/>
+				<field name="shop_id" options="{'no_create': True}"/>
 			</xpath>
 
 			<!--			hide expiry date and payment term-->
@@ -150,7 +157,8 @@
 			</xpath>
 			<xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="replace">
 				<field name="product_id" 
-				       context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"/><!--attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}"-->
+				       context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}" options="{'no_create': True}"/>
+				<!--attrs="{'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('procurement_ids', '!=', [])]}"-->
 			</xpath>
 			<xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="replace">
 <!--			    <field name="qty_delivered" invisible="context.get('hide_sale')"/>-->

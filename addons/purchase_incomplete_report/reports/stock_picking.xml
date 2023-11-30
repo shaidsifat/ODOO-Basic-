@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="multiple_user_bill_collection_report">
+    <template id="purchase_template_id">
         <t t-call="report.external_layout"/>
         <div class="page">
             <center>
                 <h1>
-                    User Wise Daily Bill Collection Report (Multiple)
+                    Incomplete Purchase Order Products  Report Collection(Multiple)
                 </h1>
             </center>
             <br/>
@@ -29,12 +29,12 @@
                 </div>
                 <div style="float:right;">
                     <strong>Printed By:</strong>
-                    <span t-esc="user_name"/>
+                    <span t-esc="username"/>
                 </div>
             </div>
             <br/>
             <center>
-                <h3>Total products:</h3>
+                <h3>Products List:</h3>
             </center>
             <t t-set="c_qty" t-value="0"></t>
             <center>
@@ -42,59 +42,63 @@
                     <thead>
                         <tr style="border: 1px solid black;">
                             <th style="border: 1px solid black;">Sl No.</th>
-                            <th style="border: 1px solid black;">User Name</th>
-                            <th style="border: 1px solid black;">Total Patient</th>
-                            <th style="border: 1px solid black;">Free Bill</th>
-                            <th style="border: 1px solid black;">Refund</th>
-                            <th style="border: 1px solid black;">Total Amount</th>
-                            <th style="border: 1px solid black;">Open Bill</th>
+                            <th style="border: 1px solid black;">Purchase Order Number</th>
+                            <th style="border: 1px solid black;">Vendor Name</th>
+                            <th style="border: 1px solid black;">Products Name</th>
+                            <th style="border: 1px solid black;">Order Quantity</th>
+                            <th style="border: 1px solid black;">Received Quantity</th>
+                            <th style="border: 1px solid black;">Backorder ID</th>
+                            <th style="border: 1px solid black;">Backorder Of</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr t-foreach="multiple_bill_collection" t-as="line">
+
+                        <tr t-foreach="final_data" t-as="line">
                             <td style="border: 1px solid black;">
                                 <span t-esc="line_index+1"/>
                             </td>
-                            <td style="border: 1px solid black;">
-                                <span t-esc="line['user_name']"/>
-                            </td>
-                            <td style="border: 1px solid black;">
-                                <span t-esc="line['total_patient']"/>
 
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['origin']"/>
                             </td>
                             <td style="border: 1px solid black;">
-                                <span t-esc="line['free_patient']"/>
+                                <span t-esc="line['partner_id']"/>
                             </td>
+
                             <td style="border: 1px solid black;">
-                                <span t-esc="line['total_Refund']"/>
+                               <t t-foreach="line['products']" t-as="product">
+                                 <span t-esc="product.product_id.name">
+                                 </span>
+                                   <br/>
+                               </t>
                             </td>
+
+                             <td style="border: 1px solid black;">
+                               <t t-foreach="line['products']" t-as="product">
+                                 <span t-esc="product.product_qty">
+                                 </span>
+                                   <br/>
+                               </t>
+                            </td>
+
                             <td style="border: 1px solid black;">
-                                <span t-esc="line['total_collection']"/>
-                                <t t-set="c_qty" t-value="c_qty+line['total_collection']"/>
+                               <t t-foreach="line['products']" t-as="product">
+                                 <span t-esc="product.qty_done">
+                                 </span>
+                                   <br/>
+                               </t>
                             </td>
+
                             <td style="border: 1px solid black;">
-                                <span t-esc="line['totalOpenInvoiceAmount']"/>
+                                <span t-esc="line['backorder_id']"/>
                             </td>
+
+                            <td style="border: 1px solid black;">
+                                <span t-esc="line['backorder_name']"/>
+                            </td>
+
                         </tr>
                         <tr>
-                            <td style="border: 1px solid black;">
-                            </td>
-                            <td style="border: 1px solid black;">
-                            </td>
-                            <td style="border: 1px solid black;">
-                            </td>
-                            <td style="border: 1px solid black;">
-                            </td>
-                            <td style="border: 1px solid black;">
-                                <b>Total :</b>
-                            </td>
-                            <td style="border: 1px solid black;">
-                                <b>
-                                    <span t-esc="c_qty"/>
-                                </b>
-                            </td>
-                            <td style="border: 1px solid black;">
-                            </td>
                         </tr>
                     </tbody>
                 </table>

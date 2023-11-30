@@ -77,7 +77,10 @@ class PatientUserProfile(models.Model):
 
         # patient_data =  dict(self.fields['gender'].selection).get(self.gender)
         print "............patient_data.........."
+        print "user current",self.env.user.id
+        user = self.env['sale.order'].search( [ ('user_id','=',36),('user_id','=',), ] )
 
+        print "user", user
         # Set the computed field value to the gender label
 
         # print "sifat", dict(vals.fields['gender'].selection).get(vals.gender)

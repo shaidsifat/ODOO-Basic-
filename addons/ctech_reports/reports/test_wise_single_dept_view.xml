@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="test_bill_report">
+    <template id="test_single_dept_report">
         <t t-call="report.external_layout"/>
         <div class="page">
+            <style>
+                .custom_table_css{
+                border-collapse:
+                collapse;align:center;
+                font-size: 19px;
+                }
+            </style>
             <div class="row">
                 <div class="col-xs-12">
                     <center>
                         <b>
                             <span>
-                                <span style="font-size:20px; font-weight:bold">Test Wise Bill Report:</span>
+                                <span style="font-size:20px; font-weight:bold">Test Wise Single Department Bill Report:</span>
                             </span>
                         </b>
                         <br/>
-                        <span>
+                         <span>
                             Billing User :
-                            <span t-esc="billing_user"/>
+                             <strong t-foreach="billing_user" t-as="line">
+                                 <span t-esc="line.name"/>,
+                             </strong>
+
                         </span>
                     </center>
                 </div>
                 <div class="col-xs-12">
                     <center>
                         <p>
-                            Date from :
+                            Start Date :
                             <span t-esc="start_date"/>
-                            , Date to :
+                            , End Date :
                             <span t-esc="end_date"/>
                         </p>
                     </center>
                 </div>
             </div>
             <t t-set="total_sum" t-value="0"/>
-            <table class="kha1 table table-condensed" style="border-collapse: collapse; ">
+            <table class="custom_table_css table table-condensed">
                 <thead>
                     <tr style="background:white">
                         <th style="border: 1px solid black;">S/N</th>
                         <th style="border: 1px solid black;">Patient Name</th>
+                        <th style="border: 1px solid black;">Patient Age</th>
                         <th style="border: 1px solid black;">Date</th>
                         <th style="border: 1px solid black;">Invoice Number</th>
                         <th style="border: 1px solid black;">Bill ID</th>
@@ -43,37 +54,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr t-foreach="test_bill_collection" t-as="order">
+                    <tr t-foreach="report_data" t-as="data">
                         <td style="border: 1px solid black;">
-                            <span t-esc="order_index+1"/>
+                            <span t-esc="data_index+1"/>
                         </td>
                         <td style="border: 1px solid black;">
-                            <span t-esc="order['partner_id']"/>
+                            <span t-esc="data['partner_name']"/>
+                        </td>
+                        <td style="border: 1px solid black; font-size:12px">
+                            <span t-esc="data['partner_age']"/>
                         </td>
                         <td style="border: 1px solid black;">
-                            <span t-esc="order['date']"/>
+                            <span t-esc="data['invoice_date']"/>
                         </td>
                         <td style="border: 1px solid black;">
-                            <span t-esc="order['number']"/>
+                            <span t-esc="data['invoice_number']"/>
                         </td>
                         <td style="border: 1px solid black;">
-                            <span t-esc="order['origin']"/>
+                            <span t-esc="data['origin']"/>
                         </td>
                         <td style="border: 1px solid black;">
-                            <span t-foreach="order['product_id']" t-as="product">
+                            <span t-foreach="data['product_name']" t-as="product">
                                 <i class="fa fa-caret-right"></i>
-                                <t t-esc="product['name']"/>
+                                <t t-esc="product"/>
                                 <br/>
                             </span>
                         </td>
                         <td style="border: 1px solid black;">
-                            <span t-esc="order['total_amount']"/>
+                            <span t-esc="data['amount_total']"/>
                             <t t-set="total_sum"
-                                   t-value="total_sum + order['total_amount']"/>
+                                   t-value="total_sum + data['amount_total']"/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="5" style="border: 1px solid black;">
+                        </td>
+                        <td style="border: 1px solid black;">
                         </td>
                         <td style="border: 1px solid black;">
                             <b>Total Amount:</b>

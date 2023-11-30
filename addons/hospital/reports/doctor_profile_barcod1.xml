@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <template id="report_doctor_profile_id_card">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <table class="table table-condensed"  style="border: 3px solid black !important;">
+                                <tr>
+                                  &lt;!&ndash;  <td width="40%">
+                                           <span>
+                                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',appointment_ids, 600, 100)" style="width:300px;height:50px"/>
+                                           </span>
+                                           <span t-field="o.appointment_ids.id"  widget="many2one_tags"/>
+                                     </td>&ndash;&gt;
+                                     <span>
+                                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',appointment_ids, 600, 100)" style="width:300px;height:50px"/>
+                                     </span>
+                                     <br>
+
+                                     </br>
+                                     <br>
+
+                                     </br>
+                                     <span t-field="o.appointment_ids.id"  widget="many2one_tags"/>
+                                     <style>
+                                         padding: 20px;
+                                     </style>
+                                    <td width="60%">
+                                        <table>
+                                            <tr>
+                                                 <td colspan="3" class="text-center">
+                                                    <span>
+                                                        <strong>Doctor Name</strong>
+                                                    </span>
+                                                 </td>
+                                                <td colspan="3" class="text-center">
+                                                    <span t-field="o.name"/>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td colspan="3" class="text-center">
+                                                    <span>
+                                                        <strong>Gender</strong>
+                                                    </span>
+                                                </td>
+                                                 <td colspan="3" class="text-center">
+                                                    <span>
+                                                       <span t-field="o.gender"/>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="text-center">
+                                                    <span>
+                                                        <strong>Age</strong>
+                                                    </span>
+                                                </td>
+                                                <td colspan="3" class="text-center">
+                                                    <span t-field="o.age"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="text-center">
+                                                    <span>
+                                                        <strong>Gender</strong>
+                                                    </span>
+                                                </td>
+                                                 <td colspan="3" class="text-center">
+                                                    <span>
+                                                       <span t-field="o.gender"/>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td colspan="3" class="text-center">
+                                                    <span>
+                                                        <strong>Date of Birth</strong>
+                                                    </span>
+                                                </td>
+                                                 <td colspan="3" class="text-center">
+                                                    <span>
+                                                       <span t-field="o.dob"/>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="text-center">
+                                                    <span>
+                                                        <strong>Institution</strong>
+                                                    </span>
+                                                </td>
+                                                 <td colspan="3" class="text-center">
+                                                    <span>
+                                                       <span t-field="o.institution"/>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td colspan="3" class="text-center">
+                                                    <span>
+                                                        <strong>Degree</strong>
+                                                    </span>
+                                                </td>
+                                                 <td colspan="3" class="text-center">
+                                                    <span>
+                                                       <span t-field="o.degree_ids.name"/>
+                                                    </span>
+                                                </td>
+                                             </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>-->
+</odoo>

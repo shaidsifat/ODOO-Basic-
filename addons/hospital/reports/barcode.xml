@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+ <report id="report_patient_detail"
+            string="Patient Barcode Report"
+            model="patient.userprofile"
+            report_type="qweb-pdf"
+            name="hospital.report_patient_id_card"
+            file="hospital.report_patient_id_card"/>
+
+  <report id="report_doctor_detail"
+            string="Doctor Barcode Report"
+            model="doctor.profile"
+            report_type="qweb-pdf"
+            name="hospital.report_doctor_profile_id_card"
+            file="hospital.report_doctor_profile_id_card"/>
+
+</odoo>
